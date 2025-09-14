@@ -3,98 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sakshi & Mithil - Wedding Website</title>
-    <meta name="description" content="Join us in celebrating the union of Sakshi & Mithil. Wedding details, schedule, and RSVP information.">
+    <title>Sakshi & Mithil - Coming Soon</title>
+    <meta name="description" content="Sakshi & Mithil's wedding website is coming soon. Join us for our special day on December 1-2, 2025.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sakshiandmithil.com/">
-    <meta property="og:title" content="Sakshi & Mithil - Wedding Website">
-    <meta property="og:description" content="Join us in celebrating the union of Sakshi & Mithil. Wedding details, schedule, and RSVP information.">
+    <meta property="og:title" content="Sakshi & Mithil - Coming Soon">
+    <meta property="og:description" content="Sakshi & Mithil's wedding website is coming soon. Join us for our special day on December 1-2, 2025.">
     <meta property="og:image" content="https://sakshiandmithil.com/assets/img/hero-bg.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://sakshiandmithil.com/">
-    <meta property="twitter:title" content="Sakshi & Mithil - Wedding Website">
-    <meta property="twitter:description" content="Join us in celebrating the union of Sakshi & Mithil. Wedding details, schedule, and RSVP information.">
+    <meta property="twitter:title" content="Sakshi & Mithil - Coming Soon">
+    <meta property="twitter:description" content="Sakshi & Mithil's wedding website is coming soon. Join us for our special day on December 1-2, 2025.">
     <meta property="twitter:image" content="https://sakshiandmithil.com/assets/img/hero-bg.jpg">
 
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="assets/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #6B705C;
+            background-color: #F0E3D3;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #6B705C;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #6B705C;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: #6B705C;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #6B705C;
+            line-height: 1.6;
+        }
+
+        /* Main Container */
+        .coming-soon-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Image */
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        /* Content */
+        .content {
+            text-align: center;
+            color: #F0E3D3;
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        .logo {
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            height: 120px;
+            width: auto;
+            max-width: 300px;
+            object-fit: contain;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            color: #F0E3D3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            font-weight: 300;
+            letter-spacing: clamp(1px, 2vw, 3px);
+            text-transform: uppercase;
+            line-height: 1.2;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .coming-soon-text {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            color: #F0E3D3;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+            letter-spacing: clamp(1px, 1.5vw, 2px);
+            text-transform: uppercase;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+
+        .wedding-date {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            color: #F0E3D3;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+            letter-spacing: clamp(1px, 1.5vw, 2px);
+            text-transform: uppercase;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #F0E3D3;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #F0E3D3;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: #6B705C;
+            color: #F0E3D3;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: rgba(240, 227, 211, 0.8);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .coming-soon-container {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .logo img {
+                height: 80px;
+            }
+
+            .countdown {
+                gap: 0.8rem;
+            }
+
+            .countdown-item {
+                padding: 0.8rem 0.3rem;
+                min-width: 70px;
+            }
+
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon-container {
+                padding: 0.5rem;
+            }
+
+            .content {
+                padding: 0.8rem;
+            }
+
+            .main-title {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                margin-bottom: 0.8rem;
+            }
+
+            .coming-soon-text {
+                font-size: clamp(1rem, 4vw, 1.2rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .wedding-date {
+                font-size: clamp(1rem, 4vw, 1.2rem);
+                margin-bottom: 2rem;
+            }
+
+            .countdown {
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .countdown-item {
+                min-width: 50px;
+                padding: 0.5rem 0.2rem;
+                flex: 1;
+                max-width: 60px;
+            }
+
+            .countdown-number {
+                font-size: 1.4rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.6rem;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .countdown {
+                gap: 0.3rem;
+            }
+
+            .countdown-item {
+                min-width: 45px;
+                padding: 0.4rem 0.1rem;
+            }
+
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.55rem;
+            }
+        }
+
+    </style>
 </head>
 <body>
-    <!-- Skip to content link for accessibility -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <img src="assets/img/Logo.png" alt="Sakshi & Mithil" class="loading-logo-image">
-            </div>
-            <div class="loading-text">
-                <h2>Sakshi & Mithil</h2>
-                <p>December 1-2, 2025</p>
-            </div>
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="#home">
-                    <img src="assets/img/Logo.png" alt="Sakshi & Mithil" class="logo-image">
-                </a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="our-story.html" class="nav-link">Our Story</a>
-                <a href="schedule.html" class="nav-link">Schedule</a>
-                <a href="travel-stay.html" class="nav-link">Travel & Stay</a>
-                <a href="photos.html" class="nav-link">Photos</a>
-                <a href="registry.html" class="nav-link">Registry</a>
-                <a href="faq.html" class="nav-link">FAQ</a>
-                <a href="#rsvp" class="nav-link nav-cta">RSVP</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <main id="main-content">
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <img src="assets/img/Mithil Proposal-04.jpeg" alt="Sakshi & Mithil" class="hero-image">
-            <div class="hero-overlay"></div>
+    <div class="coming-soon-container">
+        <!-- Background Image -->
+        <div class="background-image">
+            <img src="assets/img/Mithil Proposal-04.jpeg" alt="Sakshi & Mithil">
         </div>
         
-        <!-- Interactive floating elements -->
-        <div class="hero-floating hero-floating-1"></div>
-        <div class="hero-floating hero-floating-2"></div>
-        <div class="hero-floating hero-floating-3"></div>
-        <div class="hero-floating hero-floating-4"></div>
-        <div class="hero-floating hero-floating-5"></div>
+        <!-- Overlay -->
+        <div class="overlay"></div>
         
-        <div class="hero-content">
-            <h1 class="hero-title">Sakshi & Mithil</h1>
-            <p class="hero-subtitle">are getting married!</p>
-            <p class="hero-date">December 1-2, 2025</p>
-            <p class="hero-location">Whistling Woodz Jungle Resort, Karnataka</p>
-            <div class="hero-buttons">
-                <a href="our-story.html" class="hero-button">Our Story</a>
-                <a href="#rsvp" class="hero-button">RSVP</a>
-                <a href="schedule.html" class="hero-button">View Schedule</a>
+        <!-- Content -->
+        <div class="content">
+            <div class="logo">
+                <img src="assets/img/Logo.png" alt="Sakshi & Mithil">
             </div>
+            
+            <h1 class="main-title">Sakshi & Mithil</h1>
+            <p class="coming-soon-text">Wedding website coming soon with all details. Stay Tuned!</p>
+            <p class="wedding-date">December 1-2, 2025</p>
+            
+            <!-- Countdown Timer -->
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">0</span>
@@ -114,424 +371,42 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Scroll indicator -->
-    </section>
-
-
-
-
-
-
-
-    <!-- RSVP Section -->
-    <section id="rsvp" class="rsvp-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>RSVP</h2>
-                <p>Please let us know if you'll be joining us for our special day</p>
-            </div>
-            
-            <!-- Progress Bar -->
-            <div class="rsvp-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="progress-dots" id="progress-dots"></div>
-            </div>
-            
-            <!-- RSVP Form -->
-            <div class="rsvp-form-container">
-                <form id="rsvp-form" class="rsvp-form">
-                    <!-- Step 1: Full Name -->
-                    <div class="question active" id="q1">
-                        <div class="question-content">
-                            <h3>What's your full name?</h3>
-                            <div class="form-group">
-                                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required autofocus>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="continue-name" style="margin-top: 1rem;">Continue</button>
-                            <button type="button" class="btn btn-secondary" onclick="testAdvance()" style="margin-top: 0.5rem;">Test Advance (Debug)</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Will you be attending? -->
-                    <div class="question" id="q2">
-                        <div class="question-content">
-                            <h3>Will you be attending?</h3>
-                            <div class="radio-group">
-                                <label class="radio-card attending-yes">
-                                    <input type="radio" name="attending" value="yes">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✅</span>
-                                        <span class="radio-text">Yes, I'll be there!</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card attending-no">
-                                    <input type="radio" name="attending" value="no">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">❌</span>
-                                        <span class="radio-text">Sorry, can't make it.</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Thank You Screen for Not Attending -->
-                    <div class="question" id="q2-no">
-                        <div class="question-content">
-                            <h3>Thank you for your response, we will miss you 💛</h3>
-                            <div class="form-group">
-                                <label for="note">Would you like to leave a note for the couple?</label>
-                                <textarea id="note" name="note" placeholder="Your message (optional)" rows="4"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="not-attending-submit">Submit</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Mobile Number -->
-                    <div class="question" id="q3">
-                        <div class="question-content">
-                            <h3>What's your mobile number?</h3>
-                            <div class="form-group">
-                                <div class="phone-input">
-                                    <select id="country-code" name="country-code">
-                                        <option value="+91">🇮🇳 +91</option>
-                                        <option value="+1">🇺🇸 +1</option>
-                                        <option value="+44">🇬🇧 +44</option>
-                                        <option value="+61">🇦🇺 +61</option>
-                                        <option value="+971">🇦🇪 +971</option>
-                                    </select>
-                                    <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 4: Age -->
-                    <div class="question" id="q4">
-                        <div class="question-content">
-                            <h3>What's your age?</h3>
-                            <div class="form-group">
-                                <input type="number" id="age" name="age" placeholder="Enter your age" required>
-                                <small class="form-note">For seating & accommodation planning.</small>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 5: Family Members -->
-                    <div class="question" id="q5">
-                        <div class="question-content">
-                            <h3>Family Members</h3>
-                            <div class="family-members" id="family-members-container">
-                                <div class="family-member-row">
-                                    <input type="text" name="family-name[]" placeholder="Name" class="family-name">
-                                    <input type="number" name="family-age[]" placeholder="Age" class="family-age">
-                                </div>
-                            </div>
-                            <div class="button-group">
-                                <button type="button" class="btn btn-outline" id="add-family-member">+ Add another family member</button>
-                                <button type="button" class="btn btn-primary" id="continue-family">Continue</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 6: Travel Mode -->
-                    <div class="question" id="q6">
-                        <div class="question-content">
-                            <h3>How will you be traveling?</h3>
-                            <div class="radio-group travel-modes">
-                                <label class="radio-card travel-mode">
-                                    <input type="radio" name="travel-mode" value="flight">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✈️</span>
-                                        <span class="radio-text">Flight</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card travel-mode">
-                                    <input type="radio" name="travel-mode" value="train">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚆</span>
-                                        <span class="radio-text">Train</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card travel-mode">
-                                    <input type="radio" name="travel-mode" value="car">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚗</span>
-                                        <span class="radio-text">Car</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card travel-mode">
-                                    <input type="radio" name="travel-mode" value="other">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚌</span>
-                                        <span class="radio-text">Other</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group" id="travel-other" style="display: none;">
-                                <input type="text" name="travel-other" placeholder="Please specify">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 7: Date of Arrival -->
-                    <div class="question" id="q7">
-                        <div class="question-content">
-                            <h3>When will you arrive?</h3>
-                            <div class="radio-group arrival-dates">
-                                <label class="radio-card arrival-date">
-                                    <input type="radio" name="arrival-date" value="nov30">
-                                    <div class="radio-content">
-                                        <span class="radio-text">November 30</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-date">
-                                    <input type="radio" name="arrival-date" value="dec1">
-                                    <div class="radio-content">
-                                        <span class="radio-text">December 1 (Wedding Day)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-date">
-                                    <input type="radio" name="arrival-date" value="dec2">
-                                    <div class="radio-content">
-                                        <span class="radio-text">December 2</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-date">
-                                    <input type="radio" name="arrival-date" value="other">
-                                    <div class="radio-content">
-                                        <span class="radio-text">Other</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group" id="arrival-other" style="display: none;">
-                                <input type="date" name="arrival-other" placeholder="Select date">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 8: Location of Arrival -->
-                    <div class="question" id="q8">
-                        <div class="question-content">
-                            <h3>Where will you arrive?</h3>
-                            <div class="radio-group arrival-locations">
-                                <label class="radio-card arrival-location">
-                                    <input type="radio" name="arrival-location" value="belagavi">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✈️</span>
-                                        <span class="radio-text">Belagavi Airport (IXG)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-location">
-                                    <input type="radio" name="arrival-location" value="hubballi">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✈️</span>
-                                        <span class="radio-text">Hubballi Airport (HBX)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-location">
-                                    <input type="radio" name="arrival-location" value="londa">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚆</span>
-                                        <span class="radio-text">Londa Junction (Train)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-location">
-                                    <input type="radio" name="arrival-location" value="direct">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚗</span>
-                                        <span class="radio-text">Direct to Venue</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card arrival-location">
-                                    <input type="radio" name="arrival-location" value="other">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">📍</span>
-                                        <span class="radio-text">Other</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group" id="arrival-other" style="display: none;">
-                                <input type="text" name="arrival-other" placeholder="Please specify">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 9: Arrival Time -->
-                    <div class="question" id="q9">
-                        <div class="question-content">
-                            <h3>What time will you arrive?</h3>
-                            <div class="form-group">
-                                <input type="time" id="arrival-time" name="arrival-time">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="arrival-not-confirmed">
-                                    <span class="checkbox-text">Not yet confirmed</span>
-                                </label>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="continue-arrival-time" style="margin-top: 1rem;">Continue</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 10: Date of Departure -->
-                    <div class="question" id="q10">
-                        <div class="question-content">
-                            <h3>When will you depart?</h3>
-                            <div class="radio-group departure-dates">
-                                <label class="radio-card departure-date">
-                                    <input type="radio" name="departure-date" value="dec2">
-                                    <div class="radio-content">
-                                        <span class="radio-text">December 2</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card departure-date">
-                                    <input type="radio" name="departure-date" value="dec3">
-                                    <div class="radio-content">
-                                        <span class="radio-text">December 3</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card departure-date">
-                                    <input type="radio" name="departure-date" value="other">
-                                    <div class="radio-content">
-                                        <span class="radio-text">Other</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group" id="departure-other" style="display: none;">
-                                <input type="date" name="departure-other" placeholder="Select date">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 11: Transport Number -->
-                    <div class="question" id="q11">
-                        <div class="question-content">
-                            <h3>Transport Details</h3>
-                            <div class="form-group">
-                                <input type="text" id="transport-number" name="transport-number" placeholder="Flight / Train / Vehicle No.">
-                            </div>
-                            <button type="button" class="btn btn-primary" id="continue-transport-number" style="margin-top: 1rem;">Continue</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 12: Departure Location -->
-                    <div class="question" id="q12">
-                        <div class="question-content">
-                            <h3>Where will you depart from?</h3>
-                            <div class="radio-group transport-locations">
-                                <label class="radio-card transport-location">
-                                    <input type="radio" name="transport-location" value="belagavi">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✈️</span>
-                                        <span class="radio-text">Belagavi Airport (IXG)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card transport-location">
-                                    <input type="radio" name="transport-location" value="hubballi">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">✈️</span>
-                                        <span class="radio-text">Hubballi Airport (HBX)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card transport-location">
-                                    <input type="radio" name="transport-location" value="londa">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚆</span>
-                                        <span class="radio-text">Londa Junction (Train)</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card transport-location">
-                                    <input type="radio" name="transport-location" value="direct">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">🚗</span>
-                                        <span class="radio-text">Direct from Venue</span>
-                                    </div>
-                                </label>
-                                <label class="radio-card transport-location">
-                                    <input type="radio" name="transport-location" value="other">
-                                    <div class="radio-content">
-                                        <span class="radio-icon">📍</span>
-                                        <span class="radio-text">Other</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group" id="transport-other" style="display: none;">
-                                <input type="text" name="transport-other" placeholder="Please specify">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 13: Identity Proof Upload -->
-                    <div class="question" id="q13">
-                        <div class="question-content">
-                            <h3>Identity Proof Upload</h3>
-                            <div class="form-group">
-                                <div class="file-upload-area" id="file-upload-area">
-                                    <input type="file" id="identity-proof" name="identity-proof" accept=".jpg,.jpeg,.png,.pdf" multiple>
-                                    <div class="file-upload-content">
-                                        <span class="file-icon">📎</span>
-                                        <p>Drag and drop your ID here, or click to browse</p>
-                                        <small>JPG, PNG, PDF only, max 5MB. PAN cards not accepted.</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Submit Button (Hidden initially) -->
-                    <div class="form-actions" id="submit-button-container" style="display: none;">
-                        <button type="submit" class="btn btn-primary btn-large">Submit RSVP</button>
-                    </div>
-                </form>
-                
-                <!-- RSVP Message -->
-                <div id="rsvp-message" class="rsvp-message" style="display: none;"></div>
-            </div>
-            
-            <!-- Admin Panel (Hidden) -->
-            <div class="admin-panel" id="admin-panel" style="display: none;">
-                <h3>Admin Panel</h3>
-                <div class="admin-stats">
-                    <p>Total Responses: <span id="response-count">0</span></p>
-                </div>
-                <div class="admin-actions">
-                    <button class="btn btn-secondary" id="download-all-rsvp">Download CSV</button>
-                    <button class="btn btn-outline" id="clear-all-data">Clear All Data</button>
-                </div>
-            </div>
-            
-            <!-- Admin Toggle -->
-            <div class="admin-toggle-container">
-                <button class="btn btn-outline" id="admin-toggle">Admin Access</button>
-            </div>
-        </div>
-    </section>
-    </main>
+    </div>
     
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Sakshi & Mithil. All rights reserved.</p>
+    </footer>
 
-    <!-- Photo Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" id="lightbox-close">&times;</button>
-            <button class="lightbox-prev" id="lightbox-prev">&larr;</button>
-            <button class="lightbox-next" id="lightbox-next">&rarr;</button>
-            <img src="" alt="" id="lightbox-image">
-        </div>
-    </div>
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const weddingDate = new Date('2025-12-01T00:00:00');
+            const now = new Date();
+            const timeLeft = weddingDate - now;
 
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    <!-- Couple Message Popup -->
-    <div class="couple-popup" id="couple-popup">
-        <div class="popup-content">
-            <button class="popup-close" id="popup-close">&times;</button>
-            <h3>Message from the Couple</h3>
-            <p>We are so excited to have you! Please RSVP by September 30th, 2025. We will be adding updates soon to our schedule, FAQs, Registry and photos.</p>
-            <button class="btn btn-primary" id="popup-continue">Continue</button>
-        </div>
-    </div>
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                // Wedding has arrived!
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }
 
-    <script src="assets/main.js"></script>
+        // Update countdown immediately and then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
