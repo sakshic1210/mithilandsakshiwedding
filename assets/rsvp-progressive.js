@@ -944,7 +944,7 @@ class ProgressiveRSVP {
         this.updateAdminPanel();
     }
 
-    submitForm(e) {
+    async submitForm(e) {
         e.preventDefault();
         
         if (this.isAttending === false) {
@@ -956,13 +956,78 @@ class ProgressiveRSVP {
         // Add timestamp
         this.formData.timestamp = new Date().toISOString();
         
-        // Store in localStorage
+        // For testing: Store in localStorage and show success
         const existingRSVPs = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
         existingRSVPs.push(this.formData);
         localStorage.setItem('weddingRSVPs', JSON.stringify(existingRSVPs));
         
+        console.log('RSVP data saved locally:', this.formData);
+        alert('RSVP submitted successfully! (Saved locally for testing)');
+        
         // Show success screen
         this.showSuccessScreen();
+        
+        // TODO: Uncomment when ready to test with Google Apps Script
+        // await this.submitRSVPForm(this.formData);
+    }
+
+    async submitRSVPForm(formData) {
+        try {
+            // Create FormData object
+            const data = new FormData();
+            
+            // Add all form fields
+            data.append('fullName', formData.fullName);
+            data.append('attending', formData.attending);
+            data.append('countryCode', formData.countryCode);
+            data.append('mobileNumber', formData.mobileNumber);
+            data.append('age', formData.age);
+            data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
+            data.append('travelMode', formData.travelMode || '');
+            data.append('travelOther', formData.travelOther || '');
+            data.append('arrivalDate', formData.arrivalDate || '');
+            data.append('arrivalLocation', formData.arrivalLocation || '');
+            data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
+            data.append('arrivalTime', formData.arrivalTime || '');
+            data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed || '');
+            data.append('departureDate', formData.departureDate || '');
+            data.append('departureOther', formData.departureOther || '');
+            data.append('departureLocation', formData.departureLocation || '');
+            data.append('departureLocationOther', formData.departureLocationOther || '');
+            data.append('transportNumber', formData.transportNumber || '');
+            data.append('noteToCouple', formData.noteToCouple || '');
+            
+            // Add file if present
+            const fileInput = document.getElementById('identityProof');
+            if (fileInput && fileInput.files.length > 0) {
+                data.append('identityProof', fileInput.files[0]);
+            }
+            
+            // Replace with your actual Google Apps Script web app URL
+            const response = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+                method: 'POST',
+                body: data
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Store in localStorage as backup
+                const existingRSVPs = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+                existingRSVPs.push(formData);
+                localStorage.setItem('weddingRSVPs', JSON.stringify(existingRSVPs));
+                
+                // Show success screen
+                this.showSuccessScreen();
+            } else {
+                // Show error message
+                alert('Error submitting RSVP: ' + result.error);
+            }
+            
+        } catch (error) {
+            console.error('RSVP submission error:', error);
+            alert('Error submitting RSVP. Please try again.');
+        }
     }
 
     showSuccessScreen() {
