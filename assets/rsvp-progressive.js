@@ -956,71 +956,59 @@ class ProgressiveRSVP {
     }
 
     async submitRSVPForm(formData) {
-        try {
-            const data = new FormData();
-
-            // Add all form fields
-            data.append('fullName', formData.fullName || '');
-            data.append('attending', formData.attending || '');
-            data.append('countryCode', formData.countryCode || '');
-            data.append('mobileNumber', formData.mobileNumber || '');
-            data.append('age', formData.age || '');
-            data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
-            data.append('travelMode', formData.travelMode || '');
-            data.append('travelOther', formData.travelOther || '');
-            data.append('arrivalDate', formData.arrivalDate || '');
-            data.append('arrivalLocation', formData.arrivalLocation || '');
-            data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
-            data.append('arrivalTime', formData.arrivalTime || '');
-            data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed || '');
-            data.append('departureDate', formData.departureDate || '');
-            data.append('departureOther', formData.departureOther || '');
-            data.append('departureLocation', formData.departureLocation || '');
-            data.append('departureLocationOther', formData.departureLocationOther || '');
-            data.append('transportNumber', formData.transportNumber || '');
-            data.append('noteToCouple', formData.noteToCouple || '');
-            data.append('timestamp', formData.timestamp || new Date().toISOString());
-
-            // Add file if present
-            const fileInput = document.getElementById('identityProof');
-            if (fileInput && fileInput.files.length > 0) {
-                data.append('identityProof', fileInput.files[0]);
-            }
+      try {
+        const data = new FormData();
     
-            // Send to Google Apps Script (no headers!)
-            const response = await fetch(
-                'https://script.google.com/macros/s/AKfycbw9_LTVKfymXEMdh9srUdW1StxerRpDpi7q7lQDBuxUjKnUs3JJM-sarMLYgnNQiyzP/exec',
-                {
-                    method: 'POST',
-                    body: data
-                }
-            );
+        // Text fields (names must match Apps Script reads)
+        data.append('fullName', formData.fullName || '');
+        data.append('attending', formData.attending || '');
+        data.append('countryCode', formData.countryCode || '');
+        data.append('mobileNumber', formData.mobileNumber || '');
+        data.append('age', formData.age || '');
+        data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
+        data.append('travelMode', formData.travelMode || '');
+        data.append('travelOther', formData.travelOther || '');
+        data.append('arrivalDate', formData.arrivalDate || '');
+        data.append('arrivalLocation', formData.arrivalLocation || '');
+        data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
+        data.append('arrivalTime', formData.arrivalTime || '');
+        data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed || '');
+        data.append('departureDate', formData.departureDate || '');
+        data.append('departureOther', formData.departureOther || '');
+        data.append('departureLocation', formData.departureLocation || '');
+        data.append('departureLocationOther', formData.departureLocationOther || '');
+        data.append('transportNumber', formData.transportNumber || '');
+        data.append('noteToCouple', formData.noteToCouple || '');
+        data.append('timestamp', formData.timestamp || new Date().toISOString());
     
-            const resultText = await response.text();
-            console.log('Script response:', resultText);
-    
-            let result;
-            try {
-                result = JSON.parse(resultText);
-            } catch (err) {
-                result = { success: false, error: 'Invalid JSON response' };
-            }
-    
-            if (response.ok && result.success) {
-                if (this.isAttending === false) {
-                    this.showNoResponseThankYou();
-                } else {
-                    this.showSuccessScreen();
-                }
-            } else {
-                alert('Error submitting RSVP: ' + (result.error || 'Unknown error'));
-            }
-
-        } catch (error) {
-            console.error('RSVP submission error:', error);
-            alert('Error submitting RSVP. Please try again.');
+        // Optional file
+        const fileInput = document.getElementById('identityProof');
+        if (fileInput && fileInput.files.length > 0) {
+          data.append('identityProof', fileInput.files[0]); // field name must be 'identityProof'
         }
+    
+        // IMPORTANT: no headers — browser sets multipart/form-data automatically
+        const response = await fetch(
+          'https://script.google.com/macros/s/AKfycbwp7wl8OfHtwCzg-UC69KyCGj_lMQzwFipnoKbl68NG-EwrUb2gOHykHqpaW-EFc1zB/exec',
+          { method: 'POST', body: data }
+        );
+    
+        const text = await response.text();
+        let result; try { result = JSON.parse(text); } catch { result = { success: false }; }
+    
+        if (response.ok && result.success) {
+          if (this.isAttending === false) this.showNoResponseThankYou();
+          else this.showSuccessScreen();
+        } else {
+          alert('Error submitting RSVP. Please try again.');
+          console.warn('Script response:', text);
+        }
+      } catch (err) {
+        console.error('RSVP submission error:', err);
+        alert('Error submitting RSVP. Please try again.');
+      }
     }
+
 
     showSuccessScreen() {
         console.log('showSuccessScreen called');
