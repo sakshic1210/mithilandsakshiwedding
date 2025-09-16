@@ -8,6 +8,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
+<form id="hiddenRSVPForm" 
+      action="https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec" 
+      method="POST" 
+      target="hiddenRSVPFrame" 
+      style="display:none;">
+  <input type="hidden" name="fullName">
+  <input type="hidden" name="attending">
+  <input type="hidden" name="countryCode">
+  <input type="hidden" name="mobileNumber">
+  <input type="hidden" name="age">
+  <input type="hidden" name="familyMembers">
+  <input type="hidden" name="travelMode">
+  <input type="hidden" name="travelOther">
+  <input type="hidden" name="arrivalDate">
+  <input type="hidden" name="arrivalLocation">
+  <input type="hidden" name="arrivalLocationOther">
+  <input type="hidden" name="arrivalTime">
+  <input type="hidden" name="arrivalTimeNotConfirmed">
+  <input type="hidden" name="departureDate">
+  <input type="hidden" name="departureOther">
+  <input type="hidden" name="departureLocation">
+  <input type="hidden" name="departureLocationOther">
+  <input type="hidden" name="transportNumber">
+  <input type="hidden" name="noteToCouple">
+  <input type="hidden" name="identityProof">
+  <input type="hidden" name="timestamp">
+</form>
+
+<iframe name="hiddenRSVPFrame" style="display:none;"></iframe>
+
 <body class="rsvp-page">
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
