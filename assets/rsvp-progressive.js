@@ -982,23 +982,41 @@ class ProgressiveRSVP {
         data.append('timestamp', formData.timestamp || new Date().toISOString());
     
         // Optional file
+        // Add file if present (clicked input OR drag & drop) + send base64 fallback
         let fileBlob = null;
-
-        // 1) from the <input type="file" id="identityProof">
+        
+        // from <input type="file" id="identityProof">
         const fileInput = document.getElementById('identityProof');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
           fileBlob = fileInput.files[0];
         }
+        
+        // from drag-and-drop (stored earlier by handleFileUpload)
         if (!fileBlob && formData.identityProof && formData.identityProof instanceof File) {
           fileBlob = formData.identityProof;
         }
-    
+        
         if (fileBlob) {
+          // Attach binary (works if Apps Script populates e.files)
           data.append('identityProof', fileBlob, fileBlob.name);
+        
+          // Also attach base64 text (works even when e.files is empty)
+          const toBase64 = f => new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = () => res(String(r.result).split(',')[1]); // strip "data:*/*;base64,"
+            r.onerror = rej;
+            r.readAsDataURL(f);
+          });
+          const b64 = await toBase64(fileBlob);
+          data.append('identityProof_b64', b64);
+          data.append('identityProof_name', fileBlob.name || 'upload');
+          data.append('identityProof_type', fileBlob.type || 'application/octet-stream');
+        
           console.log('Attaching file:', fileBlob.name);
         } else {
           console.log('No file attached.');
         }
+
     
         // IMPORTANT: no headers — browser sets multipart/form-data automatically
         const response = await fetch(
