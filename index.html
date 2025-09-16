@@ -23,9 +23,10 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="assets/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="assets/access-control.js"></script>
 </head>
-<body>
+<body id="home">
     <!-- Skip to content link for accessibility -->
     
     <!-- Loading Screen -->
@@ -60,7 +61,7 @@
                 <a href="photos.html" class="nav-link">Photos</a>
                 <a href="registry.html" class="nav-link">Registry</a>
                 <a href="faq.html" class="nav-link">FAQ</a>
-                <a href="#rsvp" class="nav-link nav-cta">RSVP</a>
+                <a href="rsvp.html" class="nav-link nav-cta">RSVP</a>
             </div>
             <div class="hamburger" id="hamburger">
                 <span class="bar"></span>
@@ -85,11 +86,18 @@
         <div class="hero-floating hero-floating-4"></div>
         <div class="hero-floating hero-floating-5"></div>
         
+        <!-- Showering Hearts Animation -->
+        <div class="hearts-container" id="hearts-container"></div>
+        
         <div class="hero-content">
             <h1 class="hero-title">Sakshi & Mithil</h1>
             <p class="hero-subtitle">are getting married!</p>
             <p class="hero-date">December 1-2, 2025</p>
-            <p class="hero-location">Whistling Woodz Jungle Resort, Karnataka</p>
+            <p class="hero-location">
+                <a href="https://whistlingwoodz.com" target="_blank" class="location-link">Whistling Woodz Jungle Resort, Karnataka</a>
+                <br>
+                <a href="https://maps.google.com/maps?q=Whistling+Woodz+Jungle+Resort+Karnataka" target="_blank" class="map-link">📍 View on Map</a>
+            </p>
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">0</span>
@@ -110,9 +118,8 @@
             </div>
             
             <div class="hero-cta">
-                <a href="rsvp.html" class="btn btn-primary hero-rsvp-btn">
-                    <i class="fas fa-heart"></i>
-                    RSVP Now
+                <a href="rsvp.html" class="hero-rsvp-link">
+                    RSVP
                 </a>
             </div>
         </div>
@@ -134,7 +141,12 @@
             <div class="footer-bottom-content">
                 <p class="footer-copyright">&copy; 2025 Sakshi & Mithil. Made with ❤️ for our special day.</p>
                 <div class="footer-social">
-                    <p class="footer-love">Can't wait to celebrate with you!</p>
+                    <p class="footer-love">
+                        Can't wait to celebrate with you!
+                        <a href="https://www.instagram.com/sakshiandmithil/?igsh=dHZtOWYxM2I3dHIy#" target="_blank" class="instagram-link" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
