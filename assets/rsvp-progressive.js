@@ -875,7 +875,7 @@ class ProgressiveRSVP {
         }
     }
 
-    submitNoResponse(e) {
+    async submitNoResponse(e) {
         e.preventDefault();
         console.log('submitNoResponse called');
         
@@ -887,13 +887,8 @@ class ProgressiveRSVP {
         this.formData.attending = 'no';
         this.formData.timestamp = new Date().toISOString();
         
-        // Store in localStorage
-        const existingRSVPs = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
-        existingRSVPs.push(this.formData);
-        localStorage.setItem('weddingRSVPs', JSON.stringify(existingRSVPs));
-        
-        // Show thank you message for "No" response
-        this.showNoResponseThankYou();
+        // Submit to Google Apps Script
+        await this.submitRSVPForm(this.formData);
     }
 
     showNoResponseThankYou() {
@@ -956,19 +951,8 @@ class ProgressiveRSVP {
         // Add timestamp
         this.formData.timestamp = new Date().toISOString();
         
-        // For testing: Store in localStorage and show success
-        const existingRSVPs = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
-        existingRSVPs.push(this.formData);
-        localStorage.setItem('weddingRSVPs', JSON.stringify(existingRSVPs));
-        
-        console.log('RSVP data saved locally:', this.formData);
-        alert('RSVP submitted successfully! (Saved locally for testing)');
-        
-        // Show success screen
-        this.showSuccessScreen();
-        
-        // TODO: Uncomment when ready to test with Google Apps Script
-        // await this.submitRSVPForm(this.formData);
+        // Submit to Google Apps Script
+        await this.submitRSVPForm(this.formData);
     }
 
     async submitRSVPForm(formData) {
@@ -1003,25 +987,35 @@ class ProgressiveRSVP {
                 data.append('identityProof', fileInput.files[0]);
             }
             
-            // Replace with your actual Google Apps Script web app URL
+            // Send to Google Apps Script
             const response = await fetch('https://script.google.com/macros/s/AKfycbzvIKdtHDfiwVc4hNeQj4ZmkMqxu25By5OyiOWKDCjIW4Gmu2llHvrU0mdeunURUwyB/exec', {
                 method: 'POST',
-                body: data
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    timestamp: new Date().toISOString(),
+                    fullName: formData.fullName,
+                    attendance: formData.attendance,
+                    phoneNumber: formData.phoneNumber,
+                    age: formData.age,
+                    message: formData.message,
+                    guests: formData.guests
+                })
             });
             
             const result = await response.json();
             
-            if (result.success) {
-                // Store in localStorage as backup
-                const existingRSVPs = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
-                existingRSVPs.push(formData);
-                localStorage.setItem('weddingRSVPs', JSON.stringify(existingRSVPs));
-                
-                // Show success screen
-                this.showSuccessScreen();
+            if (response.ok && result.success) {
+                // Show appropriate success screen based on attendance
+                if (this.isAttending === false) {
+                    this.showNoResponseThankYou();
+                } else {
+                    this.showSuccessScreen();
+                }
             } else {
                 // Show error message
-                alert('Error submitting RSVP: ' + result.error);
+                alert('Error submitting RSVP: ' + (result.error || 'Unknown error'));
             }
             
         } catch (error) {
