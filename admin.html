@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Website Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F0E3D3;
+            color: #6B705C;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .admin-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #6B705C;
+            margin-bottom: 1rem;
+        }
+
+        .admin-header p {
+            color: #C58C6E;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6B705C;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #C58C6E;
+            font-weight: 500;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #6B705C;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .access-log {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #DDBEA9;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .log-entry {
+            padding: 1rem;
+            border-bottom: 1px solid #F0E3D3;
+            margin-bottom: 0.5rem;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .log-success {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+
+        .log-failed {
+            background: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid #f44336;
+        }
+
+        .log-timestamp {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .log-user-agent {
+            font-size: 0.8rem;
+            color: #888;
+            word-break: break-all;
+        }
+
+        .page-view-entry {
+            padding: 0.8rem;
+            border-bottom: 1px solid #F0E3D3;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-view-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .page-name {
+            font-weight: 600;
+            color: #6B705C;
+            margin-bottom: 0.3rem;
+        }
+
+        .page-timestamp {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #6B705C;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5A6A44;
+        }
+
+        .btn-secondary {
+            background: #C58C6E;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #B87A5A;
+        }
+
+        .export-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .export-section .btn {
+            margin: 0 0.5rem;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        /* Admin Login Styles */
+        .admin-login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .admin-login-container .login-container {
+            max-width: 400px;
+            width: 100%;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .export-section .btn {
+                display: block;
+                margin: 0.5rem 0;
+                width: 100%;
+            }
+
+            .admin-login-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Form -->
+    <div id="adminLogin" class="admin-login-container">
+        <div class="login-container">
+            <div class="logo">
+                <img src="assets/img/Logo.png" alt="Sakshi & Mithil">
+            </div>
+            
+            <h1 class="login-title">Admin Access</h1>
+            <p class="login-subtitle">Wedding Website Admin Panel</p>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Authorized Email:</label>
+                    <input type="email" id="adminEmail" name="adminEmail" placeholder="Enter your email address" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="adminLoginBtn">Access Admin Panel</button>
+                <div class="loading" id="adminLoading">
+                    <div class="spinner"></div>
+                </div>
+                <div class="error-message" id="adminErrorMessage">
+                    Unauthorized access. Only authorized administrators can access this panel.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (Hidden until authenticated) -->
+    <div id="adminDashboard" class="admin-container" style="display: none;">
+        <div class="admin-header">
+            <h1>Wedding Website Admin</h1>
+            <p>Access Analytics & Security Dashboard</p>
+            <button class="btn btn-secondary" onclick="adminLogout()" style="margin-top: 1rem;">Logout</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAccessAttempts">0</div>
+                <div class="stat-label">Total Access Attempts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successfulLogins">0</div>
+                <div class="stat-label">Successful Logins</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="failedAttempts">0</div>
+                <div class="stat-label">Failed Attempts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalPageViews">0</div>
+                <div class="stat-label">Total Page Views</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Recent Access Attempts</h2>
+            <div class="access-log" id="accessLog">
+                <div class="no-data">No access attempts recorded yet.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Page Views</h2>
+            <div class="access-log" id="pageViews">
+                <div class="no-data">No page views recorded yet.</div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <button class="btn btn-primary" onclick="exportData('access')">Export Access Log</button>
+            <button class="btn btn-secondary" onclick="exportData('pages')">Export Page Views</button>
+            <button class="btn btn-secondary" onclick="clearAllData()">Clear All Data</button>
+        </div>
+    </div>
+
+    <script>
+        // Authorized admin emails
+        const AUTHORIZED_ADMINS = [
+            'sakshichougule1210@gmail.com',
+            'mithilrl@gmail.com'
+        ];
+
+        // Check admin authentication
+        function checkAdminAuth() {
+            const adminAccess = sessionStorage.getItem('adminAccess');
+            if (adminAccess === 'granted') {
+                showAdminDashboard();
+            } else {
+                showAdminLogin();
+            }
+        }
+
+        // Show admin login form
+        function showAdminLogin() {
+            document.getElementById('adminLogin').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        // Show admin dashboard
+        function showAdminDashboard() {
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            loadAnalyticsData();
+        }
+
+        // Admin login form handler
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value.toLowerCase().trim();
+            const loginBtn = document.getElementById('adminLoginBtn');
+            const loading = document.getElementById('adminLoading');
+            const errorMessage = document.getElementById('adminErrorMessage');
+            
+            // Show loading
+            loginBtn.disabled = true;
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            
+            // Simulate network delay
+            setTimeout(() => {
+                if (AUTHORIZED_ADMINS.includes(email)) {
+                    // Grant admin access
+                    sessionStorage.setItem('adminAccess', 'granted');
+                    sessionStorage.setItem('adminEmail', email);
+                    
+                    // Track admin access
+                    trackAdminAccess(email, true);
+                    
+                    showAdminDashboard();
+                } else {
+                    // Track unauthorized attempt
+                    trackAdminAccess(email, false);
+                    
+                    // Show error
+                    errorMessage.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loading.style.display = 'none';
+                    
+                    // Clear email field
+                    document.getElementById('adminEmail').value = '';
+                }
+            }, 1000);
+        });
+
+        // Admin logout
+        function adminLogout() {
+            sessionStorage.removeItem('adminAccess');
+            sessionStorage.removeItem('adminEmail');
+            showAdminLogin();
+        }
+
+        // Track admin access attempts
+        function trackAdminAccess(email, success) {
+            try {
+                const adminAccessLog = JSON.parse(localStorage.getItem('adminAccessLog') || '[]');
+                adminAccessLog.push({
+                    email: email,
+                    success: success,
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent
+                });
+                localStorage.setItem('adminAccessLog', JSON.stringify(adminAccessLog));
+            } catch (error) {
+                console.error('Admin tracking error:', error);
+            }
+        }
+
+        // Load and display analytics data
+        function loadAnalyticsData() {
+            // Load access log
+            const accessLog = JSON.parse(localStorage.getItem('weddingAccessLog') || '[]');
+            const pageViews = JSON.parse(localStorage.getItem('weddingPageViews') || '[]');
+
+            // Calculate stats
+            const totalAttempts = accessLog.length;
+            const successfulLogins = accessLog.filter(entry => entry.success).length;
+            const failedAttempts = accessLog.filter(entry => !entry.success).length;
+            const totalPageViews = pageViews.length;
+
+            // Update stats
+            document.getElementById('totalAccessAttempts').textContent = totalAttempts;
+            document.getElementById('successfulLogins').textContent = successfulLogins;
+            document.getElementById('failedAttempts').textContent = failedAttempts;
+            document.getElementById('totalPageViews').textContent = totalPageViews;
+
+            // Display access log
+            const accessLogContainer = document.getElementById('accessLog');
+            if (accessLog.length === 0) {
+                accessLogContainer.innerHTML = '<div class="no-data">No access attempts recorded yet.</div>';
+            } else {
+                accessLogContainer.innerHTML = accessLog
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                    .map(entry => `
+                        <div class="log-entry ${entry.success ? 'log-success' : 'log-failed'}">
+                            <div class="log-timestamp">${new Date(entry.timestamp).toLocaleString()}</div>
+                            <div>${entry.success ? '✅ Successful Login' : '❌ Failed Attempt'}</div>
+                            <div class="log-user-agent">${entry.userAgent}</div>
+                        </div>
+                    `).join('');
+            }
+
+            // Display page views
+            const pageViewsContainer = document.getElementById('pageViews');
+            if (pageViews.length === 0) {
+                pageViewsContainer.innerHTML = '<div class="no-data">No page views recorded yet.</div>';
+            } else {
+                pageViewsContainer.innerHTML = pageViews
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                    .map(entry => `
+                        <div class="page-view-entry">
+                            <div class="page-name">${entry.page}</div>
+                            <div class="page-timestamp">${new Date(entry.timestamp).toLocaleString()}</div>
+                        </div>
+                    `).join('');
+            }
+        }
+
+        // Export data as CSV
+        function exportData(type) {
+            let data, filename;
+            
+            if (type === 'access') {
+                data = JSON.parse(localStorage.getItem('weddingAccessLog') || '[]');
+                filename = 'wedding-access-log.csv';
+            } else {
+                data = JSON.parse(localStorage.getItem('weddingPageViews') || '[]');
+                filename = 'wedding-page-views.csv';
+            }
+
+            if (data.length === 0) {
+                alert('No data to export.');
+                return;
+            }
+
+            const headers = Object.keys(data[0]);
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all analytics data? This cannot be undone.')) {
+                localStorage.removeItem('weddingAccessLog');
+                localStorage.removeItem('weddingPageViews');
+                loadAnalyticsData();
+                alert('All data has been cleared.');
+            }
+        }
+
+        // Initialize admin panel
+        checkAdminAuth();
+
+        // Refresh data every 30 seconds (only when dashboard is visible)
+        setInterval(() => {
+            if (document.getElementById('adminDashboard').style.display !== 'none') {
+                loadAnalyticsData();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
