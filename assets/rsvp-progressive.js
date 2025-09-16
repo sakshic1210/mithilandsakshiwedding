@@ -988,20 +988,12 @@ class ProgressiveRSVP {
             }
             
             // Send to Google Apps Script
-            const response = await fetch('https://script.google.com/macros/s/AKfycbzvIKdtHDfiwVc4hNeQj4ZmkMqxu25By5OyiOWKDCjIW4Gmu2llHvrU0mdeunURUwyB/exec', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    timestamp: new Date().toISOString(),
-                    fullName: formData.fullName,
-                    attendance: formData.attendance,
-                    phoneNumber: formData.phoneNumber,
-                    age: formData.age,
-                    message: formData.message,
-                    guests: formData.guests
-                })
+                body: JSON.stringify(formData)
             });
             
             const result = await response.json();
