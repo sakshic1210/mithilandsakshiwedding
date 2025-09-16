@@ -979,33 +979,43 @@ class ProgressiveRSVP {
             data.append('departureLocationOther', formData.departureLocationOther || '');
             data.append('transportNumber', formData.transportNumber || '');
             data.append('noteToCouple', formData.noteToCouple || '');
-            data.append('timestamp', formData.timestamp || '');
+            data.append('timestamp', formData.timestamp || new Date().toISOString());
 
             // Add file if present
             const fileInput = document.getElementById('identityProof');
             if (fileInput && fileInput.files.length > 0) {
                 data.append('identityProof', fileInput.files[0]);
             }
-
-            // 🚀 Send as FormData (no headers!)
-            const response = await fetch('https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec', {
-                method: 'POST',
-                body: data
-            });
-
+    
+            // Send to Google Apps Script (no headers!)
+            const response = await fetch(
+                'https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec',
+                {
+                    method: 'POST',
+                    body: data
+                }
+            );
+    
             const resultText = await response.text();
             console.log('Script response:', resultText);
     
-            // If success → show thank-you
-            if (response.ok) {
+            let result;
+            try {
+                result = JSON.parse(resultText);
+            } catch (err) {
+                result = { success: false, error: 'Invalid JSON response' };
+            }
+    
+            if (response.ok && result.success) {
                 if (this.isAttending === false) {
                     this.showNoResponseThankYou();
                 } else {
                     this.showSuccessScreen();
                 }
             } else {
-                alert('Error submitting RSVP. Please try again.');
+                alert('Error submitting RSVP: ' + (result.error || 'Unknown error'));
             }
+
         } catch (error) {
             console.error('RSVP submission error:', error);
             alert('Error submitting RSVP. Please try again.');
