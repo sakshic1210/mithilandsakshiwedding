@@ -955,8 +955,32 @@ class ProgressiveRSVP {
         await this.submitRSVPForm(this.formData);
     }
 
+    setSubmitting(isSending) {
+      const submitBtn   = document.getElementById('submitBtn');
+      const submitBtnNo = document.getElementById('submitBtnNo');
+    
+      [submitBtn, submitBtnNo].forEach(btn => {
+        if (!btn) return;
+        if (isSending) {
+          btn.dataset.prevText = btn.textContent || btn.dataset.prevText || 'Submit RSVP';
+          btn.textContent = 'Submitting...';
+          btn.disabled = true;
+          btn.classList.add('is-submitting');
+        } else {
+          btn.textContent = btn.dataset.prevText || 'Submit RSVP';
+          btn.disabled = false;
+          btn.classList.remove('is-submitting');
+        }
+      });
+    }
+
+    
     async submitRSVPForm(formData) {
-      try {
+        if (this._submitting) return;       // prevent double click/Enter
+        this._submitting = true;
+        this.setSubmitting(true);
+        
+        try {
         const data = new FormData();
     
         // Text fields (names must match Apps Script reads)
@@ -1020,12 +1044,12 @@ class ProgressiveRSVP {
     
         // IMPORTANT: no headers — browser sets multipart/form-data automatically
         const response = await fetch(
-          'https://script.google.com/macros/s/AKfycbzICUiqcIcesbj0e7O3pKF53mxzx8S6pyQr3CXnCJcSFHEzkKzRwa1bxvWXiHBsSZe2/exec',
+          'https://script.google.com/macros/s/AKfycbzVWCnWZSCllYiq3cucfz0TsUESUPIiPw49eS2gvKQarHviqbl8eIQ7R2RQXXlOb5yJ/exec',
           { method: 'POST', body: data }
         );
     
         const text = await response.text();
-        alert('GAS response:\n' + text);
+    
         let result; try { result = JSON.parse(text); } catch { result = { success: false }; }
     
         if (response.ok && result.success) {
@@ -1034,10 +1058,14 @@ class ProgressiveRSVP {
         } else {
           alert('Error submitting RSVP. Please try again.');
           console.warn('Script response:', text);
+          this.setSubmitting(false);
+          this._submitting = false;
         }
       } catch (err) {
         console.error('RSVP submission error:', err);
         alert('Error submitting RSVP. Please try again.');
+        this.setSubmitting(false);
+        this._submitting = false;
       }
     }
 
