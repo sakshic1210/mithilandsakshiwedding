@@ -957,15 +957,14 @@ class ProgressiveRSVP {
 
     async submitRSVPForm(formData) {
         try {
-            // Create FormData object
             const data = new FormData();
-            
+
             // Add all form fields
-            data.append('fullName', formData.fullName);
-            data.append('attending', formData.attending);
-            data.append('countryCode', formData.countryCode);
-            data.append('mobileNumber', formData.mobileNumber);
-            data.append('age', formData.age);
+            data.append('fullName', formData.fullName || '');
+            data.append('attending', formData.attending || '');
+            data.append('countryCode', formData.countryCode || '');
+            data.append('mobileNumber', formData.mobileNumber || '');
+            data.append('age', formData.age || '');
             data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
             data.append('travelMode', formData.travelMode || '');
             data.append('travelOther', formData.travelOther || '');
@@ -980,36 +979,33 @@ class ProgressiveRSVP {
             data.append('departureLocationOther', formData.departureLocationOther || '');
             data.append('transportNumber', formData.transportNumber || '');
             data.append('noteToCouple', formData.noteToCouple || '');
-            
+            data.append('timestamp', formData.timestamp || '');
+
             // Add file if present
             const fileInput = document.getElementById('identityProof');
             if (fileInput && fileInput.files.length > 0) {
                 data.append('identityProof', fileInput.files[0]);
             }
-            
-            // Send to Google Apps Script
+
+            // 🚀 Send as FormData (no headers!)
             const response = await fetch('https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
+                body: data
             });
-            
-            const result = await response.json();
-            
-            if (response.ok && result.success) {
-                // Show appropriate success screen based on attendance
+
+            const resultText = await response.text();
+            console.log('Script response:', resultText);
+    
+            // If success → show thank-you
+            if (response.ok) {
                 if (this.isAttending === false) {
                     this.showNoResponseThankYou();
                 } else {
                     this.showSuccessScreen();
                 }
             } else {
-                // Show error message
-                alert('Error submitting RSVP: ' + (result.error || 'Unknown error'));
+                alert('Error submitting RSVP. Please try again.');
             }
-            
         } catch (error) {
             console.error('RSVP submission error:', error);
             alert('Error submitting RSVP. Please try again.');
