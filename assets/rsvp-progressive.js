@@ -982,9 +982,22 @@ class ProgressiveRSVP {
         data.append('timestamp', formData.timestamp || new Date().toISOString());
     
         // Optional file
+        let fileBlob = null;
+
+        // 1) from the <input type="file" id="identityProof">
         const fileInput = document.getElementById('identityProof');
-        if (fileInput && fileInput.files.length > 0) {
-          data.append('identityProof', fileInput.files[0]); // field name must be 'identityProof'
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
+          fileBlob = fileInput.files[0];
+        }
+        if (!fileBlob && formData.identityProof && formData.identityProof instanceof File) {
+          fileBlob = formData.identityProof;
+        }
+    
+        if (fileBlob) {
+          data.append('identityProof', fileBlob, fileBlob.name);
+          console.log('Attaching file:', fileBlob.name);
+        } else {
+          console.log('No file attached.');
         }
     
         // IMPORTANT: no headers — browser sets multipart/form-data automatically
