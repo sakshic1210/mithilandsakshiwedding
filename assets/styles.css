@@ -158,7 +158,15 @@ p {
 
 /* Section */
 .section {
-    padding: 5rem 0;
+    padding: 2rem 0;
+}
+
+/* RSVP Section - Prevent navbar overlap */
+.section.rsvp-section {
+    padding-top: 85px !important; /* Minimal padding for fixed navbar (80px height + 5px buffer) */
+    padding-bottom: 2rem;
+    background: #F0E3D3;
+    min-height: 100vh;
 }
 
 /* Separate page sections - add extra padding for fixed navbar */
@@ -166,8 +174,9 @@ p {
 .photos-section,
 .registry-section,
 .faq-section,
-.schedule-section {
-    padding-top: 8rem !important; /* Extra padding to account for fixed navbar */
+.schedule-section,
+.story-section {
+    padding-top: 85px !important; /* Minimal padding to account for fixed navbar */
 }
 
 /* Section spacing - Remove bottom margins/padding before footer */
@@ -191,7 +200,7 @@ main {
 
 .section-title {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     position: relative;
     z-index: 10;
     padding: 1rem 0; /* Add padding to ensure visibility */
@@ -307,16 +316,13 @@ main {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(240, 227, 211, 0.95); /* Light Cream */
-    backdrop-filter: blur(10px);
+    background: transparent;
     z-index: 1000;
     transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(107, 112, 92, 0.2); /* Dark Green */
 }
 
 .navbar.scrolled {
-    background: rgba(240, 227, 211, 0.98); /* Light Cream */
-    box-shadow: 0 2px 20px rgba(107, 112, 92, 0.1); /* Dark Green */
+    background: transparent;
 }
 
 .nav-container {
@@ -345,6 +351,7 @@ main {
     max-width: 250px;
     object-fit: contain;
     transition: transform 0.3s ease;
+    display: none; /* Hide the logo */
 }
 
 .logo-image:hover {
@@ -352,9 +359,14 @@ main {
 }
 
 .nav-menu {
-    display: flex;
+    display: none; /* Hide on desktop */
     gap: 2rem;
     align-items: center;
+}
+
+/* Show nav menu on mobile when hamburger is clicked */
+.nav-menu.active {
+    display: flex;
 }
 
 .nav-link {
@@ -410,9 +422,13 @@ main {
 }
 
 .hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     cursor: pointer;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
 }
 
 .bar {
@@ -638,17 +654,8 @@ main {
 
 .countdown-item {
     text-align: center;
-    background: rgba(221, 190, 169, 0.9); /* Light Brown */
-    padding: 1.5rem 2rem;
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(107, 112, 92, 0.3); /* Dark Green */
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 20px rgba(221, 190, 169, 0.2);
-}
-
-.countdown-item:hover {
-    transform: translateY(-5px);
+    padding: 1.5rem 1rem;
+    min-width: 100px;
 }
 
 .countdown-number {
@@ -656,16 +663,17 @@ main {
     font-size: 2.5rem;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
-    color: #6B705C; /* Dark Green */
-    text-shadow: 1px 1px 3px rgba(240, 227, 211, 0.8);
+    color: #F0E3D3;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0.5rem;
 }
 
 .countdown-label {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #C58C6E; /* Brown */
-    text-shadow: 1px 1px 2px rgba(240, 227, 211, 0.6);
+    color: #F0E3D3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     font-weight: 500;
 }
 
@@ -742,6 +750,7 @@ main {
     max-width: 1000px;
     margin: 0 auto;
     text-align: center;
+    padding: 0 1rem; /* Add horizontal padding for mobile */
 }
 
 /* Removed story-main card styling - now using story-text instead */
@@ -794,6 +803,9 @@ main {
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: geometricPrecision;
 }
 
 .tidbit-card-back {
@@ -803,10 +815,15 @@ main {
 
 .tidbit-card-front h4 {
     color: #6B705C; /* Dark Green */
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin: 0;
     text-align: center;
     line-height: 1.4;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: geometricPrecision;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .tidbit-card-back p {
@@ -814,7 +831,12 @@ main {
     line-height: 1.6;
     margin: 0;
     text-align: center;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: geometricPrecision;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Schedule Section - Consolidated */
@@ -823,7 +845,7 @@ main {
     padding: 2rem 0 0 0; /* Remove bottom padding */
     margin-top: 0;
     margin-bottom: 0; /* Remove bottom margin */
-    padding-top: 8rem; /* Extra padding to account for fixed navbar */
+    padding-top: 85px; /* Minimal padding to account for fixed navbar */
     position: relative;
     overflow: visible; /* Allow proper content flow */
 }
@@ -1198,14 +1220,19 @@ main {
     justify-content: center;
 }
 
+.registry-content {
+    padding: 0 1rem; /* Add horizontal padding for mobile */
+}
+
 .registry-intro {
-    text-align: center;
+    text-align: justify;
     font-size: 1.1rem;
     color: #666;
     margin-bottom: 3rem;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 1rem; /* Add horizontal padding for mobile */
 }
 
 .registry-grid {
@@ -1267,6 +1294,1053 @@ main {
     padding: 4rem 0 2rem; /* Add proper padding */
 }
 
+/* RSVP Section */
+.rsvp-section {
+    background: transparent;
+    padding: 85px 0 4rem 0; /* Minimal top padding for navbar clearance */
+}
+
+.rsvp-subtitle {
+    text-align: center;
+    color: #6B705C;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+/* Progress Bar */
+.progress-container {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #E8E0D0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #C58C6E, #6B705C);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    color: #6B705C;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* RSVP Form Container */
+.rsvp-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: transparent;
+    padding: 0;
+}
+
+/* Desktop - Increased widths for better desktop experience */
+@media (min-width: 769px) {
+    .rsvp-form-container {
+        max-width: 800px !important;
+    }
+    
+    .country-select {
+        padding: 18px 16px !important;
+        font-size: 1.1rem !important;
+        min-width: 120px !important;
+        max-width: 140px !important;
+        padding-right: 50px !important;
+        background-position: right 16px center !important;
+    }
+    
+    .phone-input-container input {
+        padding: 18px 24px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .arrow-btn {
+        padding: 14px 28px !important;
+        min-width: 100px !important;
+        max-width: none !important;
+        font-size: 1.1rem !important;
+    }
+}
+
+.rsvp-form {
+    position: relative;
+}
+
+/* Form Steps */
+.form-step {
+    display: none;
+    min-height: auto;
+    padding: 0;
+}
+
+.form-step.active {
+    display: block;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-content {
+    text-align: center;
+}
+
+.step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; /* Reduced for better mobile fit */
+    color: #6B705C;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* Form Groups - Minimum font sizes and touch-friendly */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 16px 20px;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    font-size: 1rem; /* Minimum 16px for mobile */
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #6B705C;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 48px; /* Touch-friendly minimum */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 3px rgba(197, 140, 110, 0.1);
+}
+
+/* Choice Cards - Touch-friendly and aligned */
+.choice-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.choice-card {
+    background: white;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.choice-card:hover {
+    border-color: #C58C6E;
+    transform: none;
+    box-shadow: none;
+}
+
+.choice-card.active {
+    border-color: #6B705C;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+.choice-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.choice-date {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6B705C;
+    margin-bottom: 0.5rem;
+}
+
+.choice-text {
+    font-size: 0.9rem;
+    color: #6B705C;
+    font-weight: 500;
+}
+
+/* Other Input */
+.other-input {
+    margin-top: 1rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+.other-input input {
+    padding: 15px 20px;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #6B705C;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.other-input input:focus {
+    outline: none;
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 3px rgba(197, 140, 110, 0.1);
+}
+
+.other-input input::placeholder {
+    color: #6B705C;
+    opacity: 0.7;
+}
+
+.other-input input[type="date"] {
+    padding: 15px 20px;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #6B705C;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.other-input input[type="date"]:focus {
+    outline: none;
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 3px rgba(197, 140, 110, 0.1);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Phone Input */
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.phone-input-container:focus-within {
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 3px rgba(197, 140, 110, 0.1);
+}
+
+.country-select {
+    padding: 15px 6px;
+    font-size: 0.9rem;
+    background: #F0E3D3;
+    border: none;
+    border-right: 2px solid #E8E0D0;
+    color: #6B705C;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    min-width: 60px;
+    max-width: 75px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B705C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 35px;
+}
+
+.country-select:focus {
+    outline: none;
+}
+
+.phone-input-container input {
+    border: none;
+    border-radius: 0;
+    padding: 15px 15px;
+    flex: 1;
+    font-size: 0.95rem;
+    color: #6B705C;
+    font-family: 'Inter', sans-serif;
+}
+
+.phone-input-container input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Family Members */
+.family-members-container {
+    margin-bottom: 1rem;
+}
+
+.family-member {
+    display: grid;
+    grid-template-columns: 1fr 100px auto;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: transparent;
+    border: 2px solid #E8E0D0;
+    border-radius: 0;
+}
+
+.family-member input {
+    border: 1px solid #E8E0D0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.add-member-btn {
+    background: #C58C6E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+.add-member-btn:hover {
+    background: #B07A5A;
+    transform: translateY(-1px);
+}
+
+/* Ensure add member button matches input field width */
+.step-content .add-member-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
+
+/* More specific targeting for the button */
+#step5 .add-member-btn,
+.form-step#step5 .add-member-btn,
+.step-content .add-member-btn[type="button"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+.remove-member {
+    background: #E07A5F;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.remove-member:hover {
+    background: #D65A2B;
+    transform: scale(1.1);
+}
+
+/* Checkbox - Inline styling without card border */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #6B705C;
+    font-weight: 500;
+    padding: 0;
+    border: none;
+    background: transparent;
+    transition: all 0.3s ease;
+    gap: 12px;
+    min-height: auto;
+    /* Ensure proper baseline alignment */
+    line-height: 1.4;
+}
+
+.checkbox-label:hover {
+    color: #C58C6E;
+}
+
+.checkbox-label:hover .checkbox-custom {
+    border-color: #C58C6E;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #E8E0D0;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Ensure proper vertical alignment with text */
+    vertical-align: middle;
+    margin-top: -1px;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    border-color: #C58C6E;
+    background: #C58C6E;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Additional styling for better visibility */
+.checkbox-label:focus-within {
+    color: #C58C6E;
+}
+
+.checkbox-label:focus-within .checkbox-custom {
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 2px rgba(197, 140, 110, 0.2);
+}
+
+.checkbox-custom:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(197, 140, 110, 0.3);
+}
+
+/* Time Input Styling */
+.form-group input[type="time"] {
+    padding: 16px 50px 16px 20px;
+    border: 2px solid #E8E0D0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #6B705C;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    /* Allow native time picker to work */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.form-group input[type="time"]:focus {
+    outline: none;
+    border-color: #C58C6E;
+    box-shadow: 0 0 0 3px rgba(197, 140, 110, 0.1);
+    background: white;
+}
+
+.form-group input[type="time"]:disabled {
+    background: #E8E0D0;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Ensure disabled time input cannot be clicked */
+.form-group input[type="time"][disabled] {
+    background: #E8E0D0 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+}
+
+/* Show time picker icon and make it clickable */
+.form-group input[type="time"]::-webkit-calendar-picker-indicator {
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B705C'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3e%3c/svg%3e") no-repeat center;
+    background-size: 20px;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    margin-left: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    /* Ensure it's clickable */
+    pointer-events: auto;
+    z-index: 10;
+    position: relative;
+}
+
+.form-group input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Ensure time input is clickable and accessible */
+.form-group input[type="time"]:not(:disabled) {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.form-group input[type="time"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.form-group input[type="time"]::-webkit-inner-spin-button,
+.form-group input[type="time"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom Time Picker Dropdown Styling - Removed conflicting styles */
+
+/* Style the time picker dropdown when it opens */
+.form-group input[type="time"]::-webkit-datetime-edit {
+    color: #6B705C;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.form-group input[type="time"]::-webkit-datetime-edit-fields-wrapper {
+    background: transparent;
+}
+
+.form-group input[type="time"]::-webkit-datetime-edit-text {
+    color: #6B705C;
+    padding: 0 2px;
+}
+
+.form-group input[type="time"]::-webkit-datetime-edit-hour-field,
+.form-group input[type="time"]::-webkit-datetime-edit-minute-field {
+    color: #6B705C;
+    background: transparent;
+}
+
+/* Mobile time picker dropdown styling */
+@media (max-width: 768px) {
+    .form-group input[type="time"] {
+        background: white;
+        border-color: #E8E0D0;
+        color: #6B705C;
+        font-size: 1rem;
+        padding: 16px 50px 16px 20px;
+        /* Ensure native picker works on mobile */
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+    }
+    
+    .form-group input[type="time"]:focus {
+        background: white;
+        border-color: #C58C6E;
+        box-shadow: 0 0 0 2px rgba(197, 140, 110, 0.2);
+    }
+    
+    .form-group input[type="time"]:disabled {
+        background: #E8E0D0 !important;
+        color: #999 !important;
+        border-color: #D1D5DB !important;
+        cursor: not-allowed !important;
+        opacity: 0.7 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Ensure time picker icon is visible on mobile */
+    .form-group input[type="time"]::-webkit-calendar-picker-indicator {
+        background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B705C'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3e%3c/svg%3e") no-repeat center;
+        background-size: 20px;
+        opacity: 1;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        pointer-events: auto;
+        z-index: 10;
+    }
+    
+    /* Mobile checkbox styling - Inline without card border */
+    .checkbox-label {
+        margin-top: 0.8rem;
+        padding: 0;
+        font-size: 1rem;
+        background: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-height: auto;
+        /* Ensure proper baseline alignment */
+        line-height: 1.4;
+    }
+    
+    .checkbox-label:hover {
+        color: #C58C6E;
+    }
+    
+    .checkbox-label:hover .checkbox-custom {
+        border-color: #C58C6E;
+    }
+    
+    .checkbox-custom {
+        width: 20px;
+        height: 20px;
+        margin-right: 0;
+        /* Ensure proper vertical alignment with text on mobile */
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+    
+    .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+        font-size: 12px;
+    }
+}
+
+/* File Upload */
+.file-upload-container {
+    margin-bottom: 1.5rem;
+}
+
+.file-upload-area {
+    border: 2px dashed #6B705C;
+    border-radius: 0;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.file-upload-area:hover,
+.file-upload-area.drag-over {
+    border-color: #C58C6E;
+    background: transparent;
+}
+
+.file-upload-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.file-upload-text {
+    margin-bottom: 0.5rem;
+}
+
+.file-upload-text strong {
+    display: block;
+    color: #6B705C;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.file-upload-text span {
+    color: #6B705C;
+    font-size: 0.9rem;
+}
+
+.file-upload-info {
+    color: #6B705C;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: 2px solid #C58C6E;
+    border-radius: 0;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-name {
+    font-weight: 600;
+    color: #6B705C;
+    margin-bottom: 0.25rem;
+}
+
+.file-size {
+    font-size: 0.8rem;
+    color: #6B705C;
+    opacity: 0.7;
+}
+
+.remove-file {
+    background: #E07A5F;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.remove-file:hover {
+    background: #D65A2B;
+    transform: scale(1.1);
+}
+
+/* Thank You Screens */
+.thank-you-content,
+.success-content {
+    text-align: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 50vh;
+    padding-top: 2rem;
+}
+
+.thank-you-icon,
+.success-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.thank-you-title,
+.success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #6B705C;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.thank-you-message,
+.success-message {
+    color: #6B705C;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    max-width: 400px;
+}
+
+/* Arrow Button Base Styling */
+.arrow-btn {
+    background: #C58C6E;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: white;
+    padding: 10px 16px;
+    min-width: 60px;
+    max-width: 80px;
+    min-height: 44px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.arrow-btn:hover {
+    background: #B07A5A;
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.arrow-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* RSVP Navigation Base Styling */
+.rsvp-navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1.5rem 0 1rem 0;
+    padding: 1rem;
+    gap: 1rem;
+    flex-shrink: 0;
+    position: relative;
+    background: transparent;
+    border-top: 1px solid #E8E0D0;
+    border-radius: 8px;
+}
+
+/* Form Navigation */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #E8E0D0;
+}
+
+/* Desktop form navigation - align with form content */
+@media (min-width: 769px) {
+    .form-navigation {
+        justify-content: flex-end;
+        padding-left: 0;
+        margin-left: 0;
+    }
+    
+    .form-navigation .btn {
+        margin-left: 0;
+    }
+    
+    .rsvp-form-container {
+        padding: 0 2rem;
+    }
+    
+    .form-step {
+        padding: 0 2rem;
+    }
+}
+
+.form-navigation .btn {
+    background: #C58C6E;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: white;
+    padding: 12px 20px;
+    min-width: 80px;
+    min-height: 44px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-navigation .btn:hover {
+    background: #B07A5A;
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-navigation .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* When only Next button is visible (first step) */
+.form-navigation:has(#prevBtn[style*="display: none"]) {
+    justify-content: flex-end;
+}
+
+/* Fallback for browsers that don't support :has() */
+.form-navigation .btn:only-child {
+    margin-left: auto;
+}
+
+/* Specific styling for Next button when Previous is hidden */
+#nextBtn:only-of-type {
+    margin-left: auto;
+}
+
+/* Ensure Next button is right-aligned when Previous is not visible */
+.form-navigation:not(:has(#prevBtn:not([style*="display: none"]))) {
+    justify-content: flex-end;
+}
+
+/* When only Next button is visible (using class) */
+.form-navigation.next-only,
+.rsvp-navigation.next-only {
+    justify-content: flex-end;
+}
+
+.rsvp-navigation.next-only #nextBtn {
+    margin-left: auto;
+}
+
+/* Error Messages */
+.error-message {
+    color: #E07A5F;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+/* Admin Panel */
+.admin-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.admin-btn {
+    background: #6B705C;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(107, 112, 92, 0.3);
+    transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: #5A6A44;
+    transform: scale(1.1);
+}
+
+.admin-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #6B705C;
+    border-radius: 12px;
+    padding: 2rem;
+    z-index: 1001;
+    min-width: 300px;
+    box-shadow: 0 10px 30px rgba(107, 112, 92, 0.3);
+}
+
+.admin-content h3 {
+    color: #6B705C;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: #F0E3D3;
+    border-radius: 8px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #6B705C;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #6B705C;
+    opacity: 0.8;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.admin-actions .btn {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+.btn-danger {
+    background: #E07A5F;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: #D65A2B;
+    transform: translateY(-1px);
+}
+
 .faq-intro {
     text-align: center;
     margin-bottom: 3rem;
@@ -1292,22 +2366,30 @@ main {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: none !important;
+    outline: none !important;
 }
 
 .faq-question {
     width: 100%;
     padding: 1.5rem;
     background: #F0E3D3;
-    border: none;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     text-align: left;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: #6B705C; /* Dark Green */
     transition: background-color 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: geometricPrecision;
 }
 
 .faq-question:hover {
@@ -1334,26 +2416,33 @@ main {
 
 .faq-item.active .faq-answer {
     padding: 1.5rem;
-    max-height: 200px;
+    max-height: 400px;
 }
 
 
 .faq-answer p {
     color: #6B705C; /* Dark Green */
     line-height: 1.6;
-}
-
-/* RSVP Section */
-.rsvp-section {
-    background: #F0E3D3; /* Light Cream */
-    padding: 5rem 0;
-}
-
-.rsvp-intro {
-    text-align: center;
-    color: #4B553F; /* Dark Text */
-    margin-bottom: 3rem;
     font-size: 1.1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-rendering: geometricPrecision;
+}
+
+/* RSVP Form Container - Desktop */
+.rsvp-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    background: transparent;
+    overflow-x: hidden;
+}
+
+.rsvp-form {
+    position: relative;
+    background: transparent;
+    overflow-x: hidden;
 }
 
 /* RSVP Progress Bar */
@@ -1410,10 +2499,10 @@ main {
 }
 
 .rsvp-form {
-    background: #fff; /* Ivory */
-    padding: 3rem;
-    border-radius: 2rem;
-    box-shadow: 0 10px 30px rgba(75, 85, 63, 0.1);
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
     position: relative;
     overflow: hidden;
 }
@@ -1474,16 +2563,12 @@ main {
     box-sizing: border-box;
 }
 
-/* Time Input Specific Styling */
+/* Time Input Specific Styling - Removed conflicting background image */
 .form-group input[type="time"] {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 500;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234B553F'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 20px;
-    padding-right: 50px;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 400;
+    padding-right: 20px;
 }
 
 .form-group input:focus,
@@ -1836,6 +2921,46 @@ main {
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+    /* STANDARDIZED MOBILE FONT SIZES - Apply to ALL pages */
+    
+    /* Section titles - consistent across all pages */
+    .section-title {
+        font-size: 2rem !important;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* H3 headings - consistent across all pages */
+    h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* Content text - consistent across all pages */
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    /* Override specific page inconsistencies */
+    .travel-section h3,
+    .things-to-do h3,
+    .weather-info h3 {
+        font-size: 1.5rem !important;
+    }
+    
+    .story-tidbits h3 {
+        font-size: 1.5rem !important;
+    }
+    
+    .event-section h3 {
+        font-size: 1.5rem !important;
+    }
+    
     .rsvp-form {
         padding: 2rem 1.5rem;
         margin: 0 1rem;
@@ -1900,28 +3025,552 @@ main {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+    /* Mobile RSVP - Clean and Simple */
+    .rsvp-section {
+        padding: 2rem 0 !important;
+        margin: 0 !important;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: #F0E3D3;
+    }
+    
+    .rsvp-section .container {
+        padding: 0 1rem !important;
+        margin: 0 !important;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    /* RSVP specific mobile overrides - compact header */
+    .rsvp-section .section-title {
+        font-size: 1.6rem !important;
+        margin: 1rem 0 2rem 0;
+        text-align: center;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #6B705C;
+    }
+    
+    .rsvp-section .rsvp-subtitle {
+        font-size: 0.9rem;
+        margin: 1.2rem 0 1.5rem 0;
+        text-align: center;
+        color: #6B705C;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+    
+    .progress-container {
+        margin: 0 0 0.8rem 0;
+        text-align: center;
+    }
+    
+    .progress-text {
+        font-size: 0.9rem;
+        color: #6B705C;
+        line-height: 1.5;
+        font-weight: 500;
+        margin-top: 0.3rem;
+    }
+    
+    /* Form Container */
+    .rsvp-form-container {
+        max-width: 90%;
+        padding: 0;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+    
     .rsvp-form {
-        padding: 1.5rem 1rem;
-        margin: 0 0.5rem;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        overflow-x: hidden;
     }
     
-    .question-content h3 {
-        font-size: 1.3rem;
+    /* Form Steps */
+    .form-step {
+        flex: 1;
+        display: none;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
     }
     
-    .radio-content {
-        padding: 0.8rem;
-        min-height: 70px;
+    .form-step.active {
+        display: flex;
     }
     
-    .radio-icon {
+    .step-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0.5rem 0;
+        overflow-x: hidden;
+    }
+    
+    /* Question - Compact spacing for better layout */
+    .step-title {
+        font-size: 1.5rem !important;
+        margin: 0.3rem 0 0.8rem 0;
+        text-align: center;
+        line-height: 1.3;
+        font-weight: 600;
+        color: #6B705C;
+    }
+    
+    /* Choice Cards - Compact layout with two columns */
+    .choice-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+        margin: 0 0 1rem 0;
+        padding: 0 0.5rem;
+    }
+    
+    .choice-card {
+        padding: 0.8rem 0.5rem;
+        border: 2px solid #E8E0D0;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: white;
+        min-height: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+    }
+    
+    .choice-card:hover {
+        border-color: #C58C6E;
+        background: #F9F7F4;
+    }
+    
+    .choice-card.selected {
+        border-color: #C58C6E;
+        background: #F0E3D3;
+    }
+    
+    .choice-icon {
         font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .choice-date {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #6B705C;
+        margin-bottom: 0.2rem;
+    }
+    
+    .choice-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6B705C;
+    }
+    
+    /* Form Groups */
+    .form-group {
+        margin: 0 0 1rem 0;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #E8E0D0;
+        border-radius: 12px;
+        font-size: 1rem;
+        background: white;
+        min-height: 50px;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #C58C6E;
+    }
+    
+    /* Navigation - Fixed positioning for visibility */
+    .rsvp-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1.5rem 0 1rem 0;
+        padding: 1rem;
+        gap: 1rem;
+        flex-shrink: 0;
+        position: relative;
+        background: transparent;
+        border-top: 1px solid #E8E0D0;
+        border-radius: 8px;
+    }
+    
+    /* When only Next button is visible on mobile */
+    .rsvp-navigation.next-only {
+        justify-content: flex-end !important;
+    }
+    
+    .rsvp-navigation.next-only #nextBtn {
+        margin-left: auto !important;
+    }
+    
+    .arrow-btn {
+        background: #C58C6E;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: white;
+        padding: 12px 18px;
+        min-width: 70px;
+        max-width: 90px;
+        min-height: 48px; /* Touch-friendly minimum */
+        font-weight: 600;
+    }
+    
+    /* Submit button styling for last step */
+    #submitBtn {
+        background: #6B705C; /* Darker green for prominence */
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 18px 32px;
+        min-width: 150px;
+        box-shadow: 0 4px 12px rgba(107, 112, 92, 0.3);
+    }
+    
+    #submitBtn:hover {
+        background: #5A5F4A;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(107, 112, 92, 0.4);
+    }
+    
+    .arrow-btn:hover {
+        background: #B07A5A;
+        transform: none;
+    }
+    
+    .arrow-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+    
+    /* Thank you page - compact and centered */
+    .thank-you-content,
+    .success-content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1rem 0 0.05rem 0;
+        min-height: 45vh;
+    }
+    
+    .thank-you-title,
+    .success-title {
+        font-size: 1.2rem;
+        margin: 0.15rem 0;
+        line-height: 1.2;
+        font-weight: 600;
+    }
+    
+    .thank-you-message,
+    .success-message {
+        font-size: 1rem;
+        margin: 0.15rem 0 0.4rem 0;
+        line-height: 1.3;
+        max-width: 280px;
+    }
+    
+    .thank-you-icon,
+    .success-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.15rem;
+    }
+    
+    .thank-you-content .form-group,
+    .success-content .form-group {
+        width: 100%;
+        max-width: 280px;
+        margin: 0.2rem 0;
+    }
+    
+    .thank-you-content .form-group textarea,
+    .success-content .form-group textarea {
+        min-height: 50px;
+        font-size: 0.7rem;
+        line-height: 1.3;
+        padding: 0.4rem;
+        width: 100%;
+    }
+    
+    .thank-you-content .rsvp-navigation,
+    .success-content .rsvp-navigation {
+        justify-content: center;
+        margin-top: 0.2rem;
+        padding: 0;
+    }
+    
+    .thank-you-content .arrow-btn,
+    .success-content .arrow-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        min-width: 100px;
+        background: #C58C6E;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .thank-you-content .arrow-btn:hover,
+    .success-content .arrow-btn:hover {
+        background: #B07A5A;
+        transform: translateY(-1px);
+    }
+    
+    .add-member-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
+    
+    
+    /* Error Messages */
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .rsvp-section {
+        padding: 0.8rem 0 !important;
+    }
+    
+    .rsvp-section .container {
+        padding: 0 0.8rem !important;
+    }
+    
+    .rsvp-form-container {
+        padding: 0;
+        max-height: calc(100vh - 180px);
+    }
+    
+    .step-title {
+        font-size: 1.3rem !important;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+        font-weight: 600;
+    }
+    
+    .choice-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 0 0.3rem;
+    }
+    
+    .choice-card {
+        padding: 0.7rem 0.4rem;
+        min-height: 45px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+    }
+    
+    .choice-date {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #6B705C;
+        margin-bottom: 0.1rem;
+    }
+    
+    .choice-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6B705C;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+        min-height: 45px;
     }
     
     .file-upload-area {
-        padding: 1.5rem;
-        min-height: 80px;
+        padding: 0.6rem;
+        min-height: 45px;
+    }
+    
+    .file-upload-text {
+        font-size: 0.8rem;
+    }
+    
+    .form-navigation {
+        margin-top: 0.8rem;
+    }
+    
+    .form-navigation .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    /* Keep navbar and hamburger visible */
+    
+    /* Mobile Hero Section - Minimal top spacing */
+    .hero {
+        height: 100vh;
+        padding-top: 60px; /* Small padding to clear navbar */
+    }
+    
+    /* Adjust hero image position for extra small mobile - shift right to show Mithil */
+    .hero-image {
+        object-position: 30% 30%; /* Small shift right for extra small screens */
+    }
+    
+    .rsvp-section {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .rsvp-section .container {
+        padding: 0 0.5rem !important;
+    }
+    
+    .rsvp-form-container {
+        padding: 0;
+        max-height: calc(100vh - 160px);
+    }
+    
+    .step-title {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.8rem;
+        line-height: 1.3;
+        font-weight: 600;
+    }
+    
+    .choice-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+        margin-bottom: 0.8rem;
+        padding: 0 0.2rem;
+    }
+    
+    .choice-card {
+        padding: 0.6rem 0.3rem;
+        min-height: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+    }
+    
+    .choice-date {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #6B705C;
+        margin-bottom: 0.1rem;
+    }
+    
+    .choice-text {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #6B705C;
+    }
+    
+    .form-group {
+        margin-bottom: 0.8rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+    
+    .file-upload-area {
+        padding: 0.5rem;
+        min-height: 40px;
+    }
+    
+    .file-upload-text {
+        font-size: 0.75rem;
+    }
+    
+    .form-navigation {
+        margin-top: 0.6rem;
+    }
+    
+    .form-navigation .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    /* Ultra-compact styles for very small devices */
+    .thank-you-content .thank-you-title,
+    .success-content .success-title {
+        font-size: 0.9rem;
+        margin: 0.1rem 0;
+    }
+    
+    .thank-you-content .thank-you-message,
+    .success-content .success-message {
+        font-size: 0.9rem;
+        margin: 0.1rem 0 0.3rem 0;
+        max-width: 250px;
+    }
+    
+    .thank-you-content .thank-you-icon,
+    .success-content .success-icon {
+        font-size: 1.2rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .thank-you-content .form-group textarea,
+    .success-content .form-group textarea {
+        min-height: 40px;
+        font-size: 0.6rem;
+        padding: 0.3rem;
+    }
+    
+    .thank-you-content .form-group,
+    .success-content .form-group {
+        margin: 0.2rem 0;
+        max-width: 250px;
+    }
+    
+    .thank-you-content .arrow-btn,
+    .success-content .arrow-btn {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        min-width: 80px;
     }
 }
 
@@ -2043,14 +3692,23 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hamburger {
-        display: flex;
+    /* Keep navbar and hamburger visible - just reduce spacing */
+    
+    /* Mobile Hero Section - Minimal top spacing */
+    .hero {
+        height: 100vh;
+        padding-top: 60px; /* Small padding to clear navbar */
     }
-
+    
+    /* Adjust hero image position for mobile - shift right to show Mithil */
+    .hero-image {
+        object-position: 40% 30%; /* Small shift right to show more of left side (Mithil) */
+    }
+    
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 80px;
+        top: 0;
         flex-direction: column;
         background: rgba(244, 241, 222, 0.98);
         backdrop-filter: blur(10px);
@@ -2059,23 +3717,38 @@ main {
         transition: 0.3s;
         box-shadow: 0 10px 27px rgba(75, 85, 63, 0.1);
         padding: 2rem 0;
-        gap: 1rem;
+        gap: 0.5rem;
         z-index: 999;
+        height: 100vh;
+        overflow-y: hidden;
+        display: none; /* Hidden by default */
+        justify-content: center;
     }
 
     .nav-menu.active {
         left: 0;
+        display: flex; /* Show when active */
     }
 
     .nav-link {
         padding: 12px 20px;
         margin: 0 1rem;
         border-radius: 25px;
+        background: transparent;
+        color: #6B705C;
+        font-size: 1.1rem;
+        font-weight: 600;
     }
 
     .nav-cta {
         margin: 0 1rem;
-        margin-top: 1rem;
+        background: transparent;
+        color: #6B705C !important;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
     }
 
     .hamburger.active .bar:nth-child(2) {
@@ -2122,15 +3795,20 @@ main {
     }
 
     .countdown {
-        gap: 1rem;
+        gap: 0.8rem;
     }
 
     .countdown-item {
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 0.3rem;
+        min-width: 70px;
     }
 
     .countdown-number {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .countdown-label {
+        font-size: 0.7rem;
     }
 
     .story-block {
@@ -2196,6 +3874,46 @@ main {
 }
 
 @media (max-width: 480px) {
+    /* STANDARDIZED SMALL MOBILE FONT SIZES - Apply to ALL pages */
+    
+    /* Section titles - consistent across all pages */
+    .section-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* H3 headings - consistent across all pages */
+    h3 {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* Content text - consistent across all pages */
+    p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* Override specific page inconsistencies */
+    .travel-section h3,
+    .things-to-do h3,
+    .weather-info h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .story-tidbits h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .event-section h3 {
+        font-size: 1.3rem !important;
+    }
+
     .container {
         padding: 0 1rem;
     }
@@ -2208,21 +3926,144 @@ main {
     .photos-section,
     .registry-section,
     .faq-section,
-    .schedule-section {
-        padding-top: 6rem !important; /* Reduced padding for mobile */
+    .schedule-section,
+    .story-section {
+        padding: 0.1rem 1rem !important; /* Add horizontal padding for mobile */
+    }
+    
+    .rsvp-section {
+        padding: 0.1rem 0 !important; /* No navbar on mobile */
+    }
+    
+    /* RSVP specific small mobile overrides */
+    .rsvp-section .section-title {
+        font-size: 1.6rem !important;
+        margin: 0.8rem 0 1.5rem 0;
+        line-height: 1.3;
+    }
+    
+    .rsvp-section .rsvp-subtitle {
+        font-size: 0.8rem;
+        margin: 1rem 0 1.2rem 0;
+        line-height: 1.4;
+    }
+    
+    .progress-container {
+        margin: 0 0 0.2rem 0;
+    }
+    
+    .progress-text {
+        font-size: 0.8rem;
+        line-height: 1.5;
     }
 
     .hero-title {
         font-size: 2rem;
     }
 
-    .section-title {
-        font-size: 2rem;
+    .rsvp-form-container {
+        padding: 0;
+        margin: 0 1rem;
+    }
+
+    .step-title {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .choice-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .choice-card {
+        padding: 1rem 0.8rem;
+    }
+
+    .choice-icon {
+        font-size: 1.5rem;
+    }
+
+    .choice-date {
+        font-size: 1rem;
+    }
+
+    .choice-text {
+        font-size: 0.8rem;
+    }
+
+    .family-member {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        text-align: center;
+    }
+
+    .family-member input {
+        width: 100%;
+    }
+
+    .file-upload-area {
+        padding: 1.5rem 1rem;
+    }
+
+    .file-upload-text strong {
+        font-size: 1rem;
+    }
+
+    .file-upload-text span {
+        font-size: 0.8rem;
+    }
+
+    .file-upload-info {
+        font-size: 0.7rem;
+    }
+
+    .form-navigation {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .form-navigation .btn {
+        min-width: 120px;
+    }
+
+    .admin-panel {
+        margin: 1rem;
+        min-width: auto;
+        width: calc(100% - 2rem);
+    }
+
+    .admin-stats {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .admin-actions {
+        flex-direction: column;
     }
 
     .countdown {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .countdown-item {
+        min-width: 50px;
+        padding: 0.5rem 0.2rem;
+        flex: 1;
+        max-width: 60px;
+    }
+
+    .countdown-number {
+        font-size: 1.4rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.5px;
     }
 
     .event-card {
@@ -2231,6 +4072,23 @@ main {
 
     .rsvp-form {
         padding: 1.5rem;
+    }
+
+    .countdown {
+        gap: 0.3rem;
+    }
+
+    .countdown-item {
+        min-width: 45px;
+        padding: 0.4rem 0.1rem;
+    }
+
+    .countdown-number {
+        font-size: 1.2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.55rem;
     }
 }
 
@@ -2364,25 +4222,35 @@ textarea:focus {
 }
 
 .faq-question:focus {
-    outline: none;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* Skip to content link for screen readers */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: #6B705C; /* Dark Green */
-    color: #F0E3D3; /* Light Cream */
-    padding: 8px;
-    text-decoration: none;
-    border-radius: 4px;
-    z-index: 10000;
+.faq-question:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-.skip-link:focus {
-    top: 6px;
+.faq-question:hover {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
+
+.faq-item:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.faq-item:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
@@ -2984,6 +4852,7 @@ textarea:focus {
     line-height: 1.8;
     margin-bottom: 1.5rem;
     font-size: 1.1rem;
+    text-align: justify; /* Justify the text */
 }
 
 .story-text p:last-child {
@@ -3052,7 +4921,7 @@ textarea:focus {
 /* Remove outer card styling from tidbits */
 .story-tidbits {
     background: transparent;
-    padding: 2rem 0;
+    padding: 2rem 1rem; /* Add horizontal padding */
     margin: 3rem 0 0 0;
     box-shadow: none;
     min-height: 300px;
@@ -3105,7 +4974,7 @@ textarea:focus {
     }
     
     .story-text {
-        padding-right: 0;
+        padding: 0 1rem; /* Add horizontal padding for mobile */
         order: 1;
     }
     
@@ -3139,6 +5008,19 @@ textarea:focus {
 
 /* Enhanced Mobile Responsiveness */
 @media (max-width: 480px) {
+    /* Keep navbar and hamburger visible */
+    
+    /* Mobile Hero Section - Minimal top spacing */
+    .hero {
+        height: 100vh;
+        padding-top: 60px; /* Small padding to clear navbar */
+    }
+    
+    /* Adjust hero image position for smaller mobile - shift right to show Mithil */
+    .hero-image {
+        object-position: 35% 30%; /* Small shift right for smaller screens */
+    }
+    
     .hero-content {
         padding: 0 1rem;
     }
@@ -3162,6 +5044,7 @@ textarea:focus {
     .story-layout {
         gap: 1rem;
         margin: 1.5rem 0;
+        padding: 0 1rem; /* Add horizontal padding for mobile */
     }
     
     .story-text p {
@@ -3197,8 +5080,13 @@ textarea:focus {
     
     .tidbit-card-front h4,
     .tidbit-card-back p {
-        font-size: 0.9rem;
+        font-size: 1rem;
         line-height: 1.4;
+        font-weight: 500;
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+        text-rendering: geometricPrecision;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     
     .timeline-item {
@@ -3345,6 +5233,64 @@ textarea:focus {
 
 /* Extra Small Devices */
 @media (max-width: 320px) {
+    /* STANDARDIZED EXTRA SMALL MOBILE FONT SIZES - Apply to ALL pages */
+    
+    /* Section titles - consistent across all pages */
+    .section-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.8rem;
+        text-align: center;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* H3 headings - consistent across all pages */
+    h3 {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    /* Content text - consistent across all pages */
+    p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    /* Override specific page inconsistencies */
+    .travel-section h3,
+    .things-to-do h3,
+    .weather-info h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    .story-tidbits h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    .event-section h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    /* RSVP specific extra small mobile overrides */
+    .rsvp-section .section-title {
+        font-size: 1.4rem !important;
+        margin: 0.6rem 0 1.2rem 0;
+        line-height: 1.3;
+    }
+    
+    .rsvp-section .rsvp-subtitle {
+        font-size: 0.75rem;
+        margin: 0.8rem 0 1rem 0;
+        line-height: 1.4;
+    }
+    
+    .progress-text {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
     .hero-title {
         font-size: 2rem;
         letter-spacing: 1px;
@@ -3389,14 +5335,39 @@ textarea:focus {
     
     .tidbit-card-front h4,
     .tidbit-card-back p {
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         line-height: 1.3;
+        font-weight: 500;
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+        text-rendering: geometricPrecision;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     
     /* Schedule section extra small */
     .schedule-section {
         padding: 1rem 0;
-        padding-top: 5.5rem !important; /* Account for fixed navbar on extra small */
+        padding-top: 1rem !important; /* Minimal padding for extra small */
+    }
+
+    /* Story section extra small */
+    .story-section {
+        padding: 1rem 0;
+        padding-top: 1rem !important; /* Minimal padding for extra small */
+    }
+    
+    /* Other sections extra small */
+    .travel-section,
+    .photos-section,
+    .registry-section,
+    .faq-section {
+        padding: 1rem 0;
+        padding-top: 1rem !important; /* Minimal padding for extra small */
+    }
+    
+    .rsvp-section {
+        padding: 1rem 0;
+        padding-top: 0 !important; /* No navbar on mobile */
     }
     
     /* Event sections extra small */
@@ -3548,3 +5519,303 @@ body.registry-page {
 body.registry-page main {
     flex: 1;
 }
+
+/* Hero RSVP Button Styles */
+.hero-cta {
+    margin-top: 2rem;
+    opacity: 0;
+    animation: slideInUp 1s ease-out 1.6s forwards;
+}
+
+.hero-rsvp-btn {
+    background: #C58C6E;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(197, 140, 110, 0.3);
+}
+
+.hero-rsvp-btn:hover {
+    background: #B07A5A;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(197, 140, 110, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+/* Mobile responsiveness for RSVP button */
+@media (max-width: 768px) {
+    .hero-rsvp-btn {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-rsvp-btn {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+}
+
+/* Final mobile breakpoint - Fix horizontal scroll and ensure proper layout */
+@media (max-width: 600px) {
+    html, body { 
+        overflow-x: hidden !important; 
+        max-width: 100vw !important; 
+        font-size: 15px !important;
+    }
+    
+    main, .container, .section, .rsvp-form-container {
+        padding-left: 0 !important; 
+        padding-right: 0 !important; 
+        margin-left: 0 !important; 
+        margin-right: 0 !important;
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    /* No navbar on mobile - remove all top padding */
+    main, .section {
+        padding-top: 0 !important;
+    }
+    
+    .rsvp-section {
+        padding-top: 0 !important;
+    }
+    
+    /* Minimum font sizes for readability */
+    h1 {
+        font-size: 2.2rem !important;
+    }
+    
+    h2, .section-title {
+        font-size: 1.7rem !important;
+    }
+    
+    h3, .step-title {
+        font-size: 1.3rem !important;
+        min-height: auto;
+    }
+    
+    /* Ensure buttons are touch-friendly */
+    .btn, .arrow-btn {
+        min-height: 44px !important;
+        font-size: 1rem !important;
+        padding: 12px 20px !important;
+    }
+    
+    /* Fix form elements */
+    input, select, textarea, .form-group input, .form-group select, .form-group textarea {
+        font-size: 1rem !important;
+        min-height: 44px !important;
+    }
+    
+    /* Fix choice cards and grids */
+    .choice-cards, .timeline, .story-layout, .event-section {
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Fix photo gallery */
+    .photo-grid, .gallery-grid {
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Ensure error messages are readable */
+    .error-message {
+        font-size: 14px !important;
+    }
+    
+    /* Focus states for accessibility */
+    input:focus, select:focus, textarea:focus, button:focus, .nav-link:focus, .choice-card:focus {
+        outline: 2px solid #C58C6E !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Ensure proper z-index for overlays */
+    .modal, .lightbox, .couple-popup, .loading-screen {
+        z-index: 9999 !important;
+    }
+    
+    /* Reduce excessive padding on mobile */
+    .section {
+        padding: 2.5rem 0 !important;
+    }
+    
+    .hero-section {
+        padding: 2rem 0 !important;
+    }
+    
+    .schedule-section, .story-section {
+        padding-top: 2.5rem !important;
+    }
+    
+    .rsvp-section {
+        padding: 100px 0 1rem 0 !important;
+        background: #F0E3D3 !important;
+    }
+    
+    .event-section, .faq-section, .registry-section {
+        padding: 2rem 0 !important;
+    }
+    
+    /* Reduce margins between form elements */
+    .form-group {
+        margin-bottom: 1rem !important;
+    }
+    
+    .choice-cards {
+        margin-bottom: 1rem !important;
+    }
+    
+    .family-members-container {
+        margin-bottom: 1rem !important;
+    }
+    
+    .add-member-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
+    
+    /* RSVP specific fixes - Final cleanup */
+    .rsvp-section {
+        padding-top: 0 !important;
+        padding-bottom: 2rem !important;
+    }
+    
+    .rsvp-form-container {
+        padding: 0 1rem !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    .rsvp-navigation {
+        margin: 1.5rem 0 1rem 0 !important;
+        padding: 1rem !important;
+        position: relative !important;
+        background: transparent !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* When only Next button is visible on small mobile */
+    .rsvp-navigation.next-only {
+        justify-content: flex-end !important;
+    }
+    
+    .rsvp-navigation.next-only #nextBtn {
+        margin-left: auto !important;
+    }
+    
+    .step-content {
+        padding: 0.5rem 0 !important;
+        overflow-x: hidden !important;
+    }
+    
+    .choice-cards {
+        width: 100% !important;
+        overflow-x: hidden !important;
+        margin: 0 0 1.5rem 0 !important;
+    }
+}
+
+/* ========================================
+   FOOTER STYLES
+======================================== */
+
+.footer {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2418 50%, #2c1810 100%);
+    color: #f5f5f5;
+    padding: 2rem 0;
+    margin-top: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C58C6E, transparent);
+}
+
+.footer-bottom {
+    padding-top: 1rem;
+}
+
+.footer-bottom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #b8b8b8;
+    margin: 0;
+}
+
+.footer-social {
+    display: flex;
+    align-items: center;
+}
+
+.footer-love {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #C58C6E;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Footer Responsive Design */
+@media (max-width: 768px) {
+    .footer {
+        padding: 1.5rem 0;
+        margin-top: 3rem;
+    }
+    
+    .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 1rem 0;
+        margin-top: 2rem;
+    }
+    
+    .footer-bottom-content {
+        padding: 0 1rem;
+    }
+    
+    .footer-copyright,
+    .footer-love {
+        font-size: 0.85rem;
+    }
+}
+
