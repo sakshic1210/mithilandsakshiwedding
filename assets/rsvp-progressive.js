@@ -1025,6 +1025,7 @@ class ProgressiveRSVP {
         );
     
         const text = await response.text();
+        alert('GAS response:\n' + text);
         let result; try { result = JSON.parse(text); } catch { result = { success: false }; }
     
         if (response.ok && result.success) {
