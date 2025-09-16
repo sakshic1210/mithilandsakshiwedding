@@ -972,7 +972,7 @@ class ProgressiveRSVP {
         data.append('arrivalLocation', formData.arrivalLocation || '');
         data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
         data.append('arrivalTime', formData.arrivalTime || '');
-        data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed || '');
+        data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed ? 'true' : 'false');
         data.append('departureDate', formData.departureDate || '');
         data.append('departureOther', formData.departureOther || '');
         data.append('departureLocation', formData.departureLocation || '');
