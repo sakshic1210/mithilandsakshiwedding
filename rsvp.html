@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="rsvp-page">
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -52,7 +52,7 @@
 
                 <!-- RSVP Form Steps -->
                 <div class="rsvp-form-container">
-                    <form id="rsvpForm" class="rsvp-form">
+                    <form id="rsvp-form" class="rsvp-form">
                         <!-- Step 1: Full Name -->
                         <div class="form-step active" id="step1">
                             <div class="step-content">
@@ -174,8 +174,8 @@
                                 <h3 class="step-title">Who else is coming with you?</h3>
                                 <div class="family-members-container">
                                     <div class="family-member" data-index="0">
-                                        <input type="text" name="familyName[]" placeholder="Full name" required>
-                                        <input type="number" name="familyAge[]" placeholder="Age" min="1" max="120" required>
+                                        <input type="text" name="familyName[]" placeholder="Full name">
+                                        <input type="number" name="familyAge[]" placeholder="Age" min="1" max="120">
                                         <button type="button" class="remove-member" style="display: none;">×</button>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                 <div class="other-input" id="travelOtherInput" style="display: none;">
                                     <input type="text" id="travelOther" name="travelOther" placeholder="Please specify">
                                 </div>
-                                <input type="hidden" id="travelMode" name="travelMode" required>
+                                <input type="hidden" id="travelMode" name="travelMode">
                                 <div class="error-message" id="travelModeError"></div>
                             </div>
                         </div>
@@ -239,7 +239,7 @@
                                 <div class="other-input" id="arrivalOtherInput" style="display: none;">
                                     <input type="date" id="arrivalOther" name="arrivalOther">
                                 </div>
-                                <input type="hidden" id="arrivalDate" name="arrivalDate" required>
+                                <input type="hidden" id="arrivalDate" name="arrivalDate">
                                 <div class="error-message" id="arrivalDateError"></div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                                 <div class="other-input" id="arrivalLocationOtherInput" style="display: none;">
                                     <input type="text" id="arrivalLocationOther" name="arrivalLocationOther" placeholder="Please specify location">
                                 </div>
-                                <input type="hidden" id="arrivalLocation" name="arrivalLocation" required>
+                                <input type="hidden" id="arrivalLocation" name="arrivalLocation">
                                 <div class="error-message" id="arrivalLocationError"></div>
                             </div>
                         </div>
@@ -315,7 +315,7 @@
                                 <div class="other-input" id="departureOtherInput" style="display: none;">
                                     <input type="date" id="departureOther" name="departureOther">
                                 </div>
-                                <input type="hidden" id="departureDate" name="departureDate" required>
+                                <input type="hidden" id="departureDate" name="departureDate">
                                 <div class="error-message" id="departureDateError"></div>
                             </div>
                         </div>
@@ -360,7 +360,7 @@
                                 <div class="other-input" id="departureLocationOtherInput" style="display: none;">
                                     <input type="text" id="departureLocationOther" name="departureLocationOther" placeholder="Please specify location">
                                 </div>
-                                <input type="hidden" id="departureLocation" name="departureLocation" required>
+                                <input type="hidden" id="departureLocation" name="departureLocation">
                                 <div class="error-message" id="departureLocationError"></div>
                             </div>
                         </div>
@@ -405,7 +405,7 @@
                                     </div>
                                     <!-- Navigation Buttons -->
                                     <div class="rsvp-navigation">
-                                        <button type="submit" class="arrow-btn" id="submitBtnNo">Submit Response</button>
+                                        <button type="submit" class="btn btn-primary" id="submitBtnNo">Submit Response</button>
                                     </div>
                                 </div>
                             </div>
@@ -427,7 +427,7 @@
             <div class="rsvp-navigation" id="mainNavigation">
                 <button type="button" class="arrow-btn" id="prevBtn" style="display: none;">←</button>
                 <button type="button" class="arrow-btn" id="nextBtn">→</button>
-                <button type="submit" class="arrow-btn" id="submitBtn" style="display: none;">✓</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">✓</button>
             </div>
                     </form>
                 </div>
@@ -471,7 +471,12 @@
             <div class="footer-bottom-content">
                 <p class="footer-copyright">&copy; 2025 Sakshi & Mithil. Made with ❤️ for our special day.</p>
                 <div class="footer-social">
-                    <p class="footer-love">Can't wait to celebrate with you!</p>
+                    <p class="footer-love">
+                        Can't wait to celebrate with you!
+                        <a href="https://www.instagram.com/sakshiandmithil/?igsh=dHZtOWYxM2I3dHIy#" target="_blank" class="instagram-link" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
