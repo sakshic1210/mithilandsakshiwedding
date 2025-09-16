@@ -55,11 +55,23 @@ document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initScheduleTabs();
     
-    // Delay RSVP initialization to ensure DOM is ready
-    setTimeout(() => {
-        console.log('Initializing RSVP after delay');
-        initRSVP();
-    }, 100);
+    // Only initialize old RSVP if not on the dedicated RSVP page
+    if (!window.location.pathname.includes('rsvp.html')) {
+        setTimeout(() => {
+            console.log('Initializing RSVP after delay');
+            initRSVP();
+        }, 100);
+    } else {
+        // Initialize Progressive RSVP for dedicated RSVP page
+        setTimeout(() => {
+            if (window.ProgressiveRSVP) {
+                console.log('Initializing ProgressiveRSVP');
+                new ProgressiveRSVP();
+            } else {
+                console.error('ProgressiveRSVP class not found');
+            }
+        }, 100);
+    }
     
     initPhotoGallery();
     
