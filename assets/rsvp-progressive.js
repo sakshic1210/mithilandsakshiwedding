@@ -989,7 +989,7 @@ class ProgressiveRSVP {
     
             // Send to Google Apps Script (no headers!)
             const response = await fetch(
-                'https://script.google.com/macros/s/AKfycbyPmUYQetax-vtW6kmuLo9ZFh-CMkcs-5yMrdEVAnNTJxXDPQv_Pu-LNlf6QthUD5aD/exec',
+                'https://script.google.com/macros/s/AKfycbw9_LTVKfymXEMdh9srUdW1StxerRpDpi7q7lQDBuxUjKnUs3JJM-sarMLYgnNQiyzP/exec',
                 {
                     method: 'POST',
                     body: data
