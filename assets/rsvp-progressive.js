@@ -974,11 +974,44 @@ class ProgressiveRSVP {
       });
     }
 
+    createLoadingOverlay() {
+      if (document.getElementById('rsvpLoadingOverlay')) return;
     
+      const style = document.createElement('style');
+      style.id = 'rsvpLoadingStyles';
+      style.textContent = `
+        #rsvpLoadingOverlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+          background:rgba(0,0,0,.45);backdrop-filter:saturate(1.2) blur(2px);z-index:9999}
+        #rsvpLoadingOverlay .box{background:#fff;padding:20px 24px;border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.2);
+          display:flex;gap:12px;align-items:center;font:500 15px/1.3 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+        #rsvpLoadingOverlay .spinner{width:22px;height:22px;border:3px solid #e0e0e0;border-top-color:#111;border-radius:50%;
+          animation:rsvp-spin .9s linear infinite}
+        @keyframes rsvp-spin{to{transform:rotate(360deg)}}
+      `;
+      document.head.appendChild(style);
+    
+      const overlay = document.createElement('div');
+      overlay.id = 'rsvpLoadingOverlay';
+      overlay.innerHTML = `<div class="box"><div class="spinner"></div><div>Submitting RSVP…</div></div>`;
+      document.body.appendChild(overlay);
+    }
+    showLoadingOverlay() {
+      this.createLoadingOverlay();
+      const el = document.getElementById('rsvpLoadingOverlay');
+      if (el) el.style.display = 'flex';
+      document.body.style.cursor = 'progress';
+    }
+    hideLoadingOverlay() {
+      const el = document.getElementById('rsvpLoadingOverlay');
+      if (el) el.style.display = 'none';
+      document.body.style.cursor = '';
+    }
+
     async submitRSVPForm(formData) {
         if (this._submitting) return;       // prevent double click/Enter
         this._submitting = true;
         this.setSubmitting(true);
+        this.showLoadingOverlay();
         
         try {
         const data = new FormData();
@@ -1053,15 +1086,18 @@ class ProgressiveRSVP {
         let result; try { result = JSON.parse(text); } catch { result = { success: false }; }
     
         if (response.ok && result.success) {
+          this.hideLoadingOverlay();
           if (this.isAttending === false) this.showNoResponseThankYou();
           else this.showSuccessScreen();
         } else {
-          alert('Error submitting RSVP. Please try again.');
-          console.warn('Script response:', text);
-          this.setSubmitting(false);
-          this._submitting = false;
+            this.hideLoadingOverlay();
+            alert('Error submitting RSVP. Please try again.');
+            console.warn('Script response:', text);
+            this.setSubmitting(false);
+            this._submitting = false;
         }
       } catch (err) {
+        this.hideLoadingOverlay();
         console.error('RSVP submission error:', err);
         alert('Error submitting RSVP. Please try again.');
         this.setSubmitting(false);
