@@ -1020,7 +1020,7 @@ class ProgressiveRSVP {
     
         // IMPORTANT: no headers — browser sets multipart/form-data automatically
         const response = await fetch(
-          'https://script.google.com/macros/s/AKfycbxX6JOdiqJ4dUlzfix09e8lvwPhfmjuSbUdZFehHbDnCtz-0A3BX0gOl3AMCw_RYP6k/exec',
+          'https://script.google.com/macros/s/AKfycbzICUiqcIcesbj0e7O3pKF53mxzx8S6pyQr3CXnCJcSFHEzkKzRwa1bxvWXiHBsSZe2/exec',
           { method: 'POST', body: data }
         );
     
