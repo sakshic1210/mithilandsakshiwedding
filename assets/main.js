@@ -15,6 +15,9 @@ const navLinks = document.querySelectorAll('.nav-link');
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded');
     
+    // Initialize hearts animation
+    initHeartsAnimation();
+    
     // Add smooth navigation transitions
     initSmoothNavigation();
     
@@ -62,15 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
             initRSVP();
         }, 100);
     } else {
-        // Initialize Progressive RSVP for dedicated RSVP page
-        setTimeout(() => {
-            if (window.ProgressiveRSVP) {
-                console.log('Initializing ProgressiveRSVP');
-                new ProgressiveRSVP();
-            } else {
-                console.error('ProgressiveRSVP class not found');
-            }
-        }, 100);
+        // Progressive RSVP is initialized by rsvp-progressive.js
+        console.log('RSVP page detected - ProgressiveRSVP will be initialized by rsvp-progressive.js');
     }
     
     initPhotoGallery();
@@ -1562,6 +1558,53 @@ function initSmoothNavigation() {
             }
         });
     });
+}
+
+// Hearts Animation Function
+function initHeartsAnimation() {
+    const heartsContainer = document.getElementById('hearts-container');
+    
+    if (!heartsContainer) return;
+    
+    // Create hearts for 3 seconds
+    const heartInterval = setInterval(() => {
+        createHeart();
+    }, 150); // Create a heart every 150ms
+    
+    // Stop creating hearts after 3 seconds
+    setTimeout(() => {
+        clearInterval(heartInterval);
+    }, 3000);
+}
+
+function createHeart() {
+    const heartsContainer = document.getElementById('hearts-container');
+    if (!heartsContainer) return;
+    
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    
+    // Random horizontal position
+    heart.style.left = Math.random() * 100 + '%';
+    
+    // Random size variation
+    const size = 15 + Math.random() * 10; // 15px to 25px
+    heart.style.width = size + 'px';
+    heart.style.height = size + 'px';
+    
+    // Random color variation
+    const colors = ['#ff6b6b', '#ff8e8e', '#ffa8a8', '#ffb3ba', '#ffc0cb'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.background = randomColor;
+    
+    heartsContainer.appendChild(heart);
+    
+    // Remove heart after animation completes
+    setTimeout(() => {
+        if (heart.parentNode) {
+            heart.parentNode.removeChild(heart);
+        }
+    }, 3000);
 }
 
 console.log('🎉 Wedding Website Loaded Successfully!');
