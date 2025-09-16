@@ -1004,7 +1004,7 @@ class ProgressiveRSVP {
             }
             
             // Replace with your actual Google Apps Script web app URL
-            const response = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbw515szEw22oTNQ-fu3CSfd9Yfve8E8cDGiG2iUCgWzbS6HkI4LyTUpIDitzCYX9FQsIA/exec', {
                 method: 'POST',
                 body: data
             });
