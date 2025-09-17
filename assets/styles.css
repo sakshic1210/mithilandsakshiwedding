@@ -548,6 +548,26 @@ main {
     }
 }
 
+.hero-logo-top {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    z-index: 100;
+    text-align: left;
+}
+
+.hero-logo-image {
+    height: 140px;
+    width: auto;
+    filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+}
+
+.hero-logo-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 12px 35px rgba(0, 0, 0, 0.4));
+}
+
 .hero-title {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     margin-bottom: 1rem;
@@ -606,6 +626,36 @@ main {
     text-transform: uppercase;
     word-wrap: break-word;
     line-height: 1.4;
+}
+
+.location-link {
+    color: #F0E3D3;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.location-link:hover {
+    color: white;
+    border-bottom: 1px solid rgba(240, 227, 211, 0.7);
+    text-decoration: none;
+}
+
+.map-link {
+    color: rgba(240, 227, 211, 0.8);
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    margin-top: 0.3rem;
+}
+
+.map-link:hover {
+    color: white;
+    border-bottom: 1px solid rgba(240, 227, 211, 0.7);
+    text-decoration: none;
 }
 
 @keyframes slideInUp {
@@ -3863,6 +3913,17 @@ main {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    .hero-logo-top {
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .hero-logo-image {
+        height: 110px;
+    }
+
     .hero-title {
         font-size: 2.5rem;
         letter-spacing: 2px;
@@ -4059,6 +4120,17 @@ main {
     .progress-text {
         font-size: 0.8rem;
         line-height: 1.5;
+    }
+
+    .hero-logo-top {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .hero-logo-image {
+        height: 95px;
     }
 
     .hero-title {
@@ -5400,6 +5472,17 @@ textarea:focus {
         line-height: 1.4;
     }
 
+    .hero-logo-top {
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .hero-logo-image {
+        height: 85px;
+    }
+
     .hero-title {
         font-size: 2rem;
         letter-spacing: 1px;
@@ -5945,7 +6028,7 @@ body.registry-page main {
 /* Homepage specific footer positioning */
 #home .footer,
 .hero ~ .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -6011,6 +6094,22 @@ body.rsvp-page {
 .footer-social {
     display: flex;
     align-items: center;
+    gap: 1rem;
+}
+
+.instagram-link {
+    color: #C58C6E;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.instagram-link:hover {
+    color: #E4405F;
+    transform: scale(1.1);
+    text-decoration: none;
 }
 
 .footer-love {
@@ -6034,6 +6133,16 @@ body.rsvp-page {
         gap: 1rem;
         padding: 0 1.5rem;
     }
+    
+    .footer-social {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .instagram-link {
+        font-size: 1.1rem;
+        margin-left: 0.4rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -6052,3 +6161,12 @@ body.rsvp-page {
     }
 }
 
+/* === HERO FIX (put at very end of styles.css) === */
+.hero { position: relative; min-height: 100vh; overflow: hidden; }
+.hero-background { position: absolute; inset: 0; z-index: 0; }
+.hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-overlay { position: absolute; inset: 0; z-index: 1; }
+.hero-content { position: relative; z-index: 2; }
+.hearts-container { z-index: 3; }
+/* optional: if the radial layer is darkening too much, kill it */
+.hero::before { content: none; }
