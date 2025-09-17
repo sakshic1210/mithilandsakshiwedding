@@ -6177,12 +6177,46 @@ body { min-height: 100svh; display: flex; flex-direction: column; }
 main { flex: 1 0 auto; }          /* make main fill the space */
 .footer { margin-top: auto; }      /* push footer to the bottom */
 
-/* --- Stable hero height (avoid iOS 100vh issues) --- */
-.hero { height: auto !important; min-height: 100vh; }  /* fallback */
-@supports (height: 100svh) {
-  .hero { min-height: 100svh !important; }             /* correct on mobile */
+/* =======================
+   HOME PAGE FIXED FOOTER
+   ======================= */
+:root {
+  --nav-h: 60px;            /* mobile nav approx */
+  --footer-h: 120px;        /* footer height */
 }
-@media (min-width: 769px) {
-  .hero { min-height: calc(100svh - 80px) !important; }/* account for fixed navbar on desktop */
+
+/* iOS-safe viewport + safe area */
+@supports (height: 100svh) {
+  :root { --vh: 100svh; }
+}
+@supports not (height: 100svh) {
+  :root { --vh: 100vh; }
+}
+
+/* Fix the footer to the bottom on the HOME page only */
+body#home .footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 900;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+/* Give the content room so the footer doesn't cover it */
+body#home main {
+  padding-bottom: calc(var(--footer-h) + env(safe-area-inset-bottom));
+}
+
+/* Make the hero stop behind the footer (so it doesn't peek out) */
+body#home .hero {
+  min-height: calc(var(--vh) - var(--footer-h)) !important;
+  height: auto !important;
+}
+
+/* Slightly taller footer on small phones */
+@media (max-width: 480px) {
+  :root { --footer-h: 140px; }
 }
 
