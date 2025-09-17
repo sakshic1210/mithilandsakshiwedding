@@ -6204,19 +6204,39 @@ body#home .footer {
   padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
 
-/* Give the content room so the footer doesn't cover it */
-body#home main {
-  padding-bottom: calc(var(--footer-h) + env(safe-area-inset-bottom));
+/* ===== HOME PAGE ONLY: footer pinned + iOS-safe, hero sized to visible viewport ===== */
+:root { --footer-space: 120px; } /* space reserved for footer; tweak if needed */
+
+/* Make sure non-home pages keep a normal, non-fixed footer */
+body:not(#home) .footer {
+  position: static !important;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
 }
 
-/* Make the hero stop behind the footer (so it doesn't peek out) */
-body#home .hero {
-  min-height: calc(var(--vh) - var(--footer-h)) !important;
+/* Home page: fix footer to the bottom, with safe-area padding */
+#home .footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+/* Reserve space so the fixed footer doesn't cover content */
+#home main {
+  padding-bottom: var(--footer-space);
+}
+
+/* Home hero should fit the visible viewport (no extra scroll on iOS) */
+#home .hero {
   height: auto !important;
+  min-height: calc(100svh - var(--footer-space)) !important;
+}
+@supports (height: 100dvh) {
+  #home .hero {
+    min-height: calc(100dvh - var(--footer-space)) !important;
+  }
 }
 
-/* Slightly taller footer on small phones */
-@media (max-width: 480px) {
-  :root { --footer-h: 140px; }
-}
 
