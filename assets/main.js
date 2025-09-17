@@ -1104,8 +1104,9 @@ initLazyLoading();
 // Form Validation Helpers
 function showFieldError(field, message) {
     const formGroup = field.closest('.form-group');
+    if (!formGroup) return; // nothing to attach to
+
     let errorElement = formGroup.querySelector('.field-error');
-    
     if (!errorElement) {
         errorElement = document.createElement('div');
         errorElement.className = 'field-error';
@@ -1114,20 +1115,25 @@ function showFieldError(field, message) {
         errorElement.style.marginTop = '0.25rem';
         formGroup.appendChild(errorElement);
     }
-    
+
     errorElement.textContent = message;
-    field.style.borderColor = '#dc3545';
+    if (field && field.style) field.style.borderColor = '#dc3545';
 }
 
 function clearFieldError(field) {
     const formGroup = field.closest('.form-group');
+    if (!formGroup) {
+        // Input isn't inside a .form-group (e.g., custom file/choice inputs)
+        // Just reset the border and exit safely.
+        if (field && field.style) field.style.removeProperty('border-color');
+        return;
+    }
+
     const errorElement = formGroup.querySelector('.field-error');
-    
     if (errorElement) {
         errorElement.remove();
     }
-    
-    field.style.borderColor = '#e9ecef';
+    if (field && field.style) field.style.borderColor = '#e9ecef';
 }
 
 // Add real-time validation to form fields
