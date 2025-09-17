@@ -6223,20 +6223,29 @@ body:not(#home) .footer {
   padding-bottom: calc(12px + env(safe-area-inset-bottom));
 }
 
-/* Reserve space so the fixed footer doesn't cover content */
-#home main {
-  padding-bottom: var(--footer-space);
+/* --- Layout: keep footer at the bottom on all pages --- */
+html, body { height: 100%; }
+body {
+  min-height: 100svh;           /* handles iOS browser chrome */
+  display: flex;
+  flex-direction: column;
+}
+main { flex: 1 0 auto; }        /* content grows and pushes footer down */
+.footer {
+  position: static !important;  /* ensure it's not fixed */
+  flex-shrink: 0;
+  width: 100%;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); /* safe area on iPhone */
 }
 
-/* Home hero should fit the visible viewport (no extra scroll on iOS) */
+/* --- HOME page: hero should fill the screen so footer is below the fold --- */
 #home .hero {
   height: auto !important;
-  min-height: calc(100svh - var(--footer-space)) !important;
+  min-height: 100svh !important;     /* dynamic viewport height for mobile */
 }
 @supports (height: 100dvh) {
-  #home .hero {
-    min-height: calc(100dvh - var(--footer-space)) !important;
-  }
+  #home .hero { min-height: 100dvh !important; }
 }
+
 
 
