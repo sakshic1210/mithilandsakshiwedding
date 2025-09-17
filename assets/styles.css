@@ -6028,7 +6028,7 @@ body.registry-page main {
 /* Homepage specific footer positioning */
 #home .footer,
 .hero ~ .footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
@@ -6039,6 +6039,7 @@ body.registry-page main {
 #home {
     height: 100vh;
     overflow: hidden;
+    position: relative;
 }
 
 #home main {
