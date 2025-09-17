@@ -218,11 +218,11 @@ p {
     margin-bottom: 0;
 }
 
-/* Ensure no gap between main content and footer */
-main {
-    margin-bottom: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-}
+/* Ensure no gap between main content and footer + sticky footer layout */
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+main { flex: 1 0 auto; margin-bottom: 0; overflow-x: hidden; }
+footer.footer { flex-shrink: 0; }
 
 
 .section-title {
@@ -3724,48 +3724,43 @@ main {
 }
 
 /* Footer */
-.footer {
-    background: #6B705C; /* Dark Green */
-    color: #F0E3D3; /* Light Cream */
-    padding: 1rem 0 0.5rem;
-    margin-top: 0;
+.footer { background: #6B705C; color: #F0E3D3; padding: 1rem 0 0.5rem; margin-top: 0; }
+
+/* Home footer wrappers used in index.html */
+.footer-bottom { background: inherit; }
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
+/* Text */
+.footer-bottom-content p { margin: 0; color: rgba(240,227,211,0.85); }
 
-.footer-text p {
-    color: rgba(240, 227, 211, 0.8); /* Light Cream with transparency */
-    margin-bottom: 0.25rem;
-}
+/* Social/link */
+.footer-social { display: flex; align-items: center; gap: 0.5rem; }
+.footer-love { margin: 0; display: flex; align-items: center; gap: 0.5rem; }
 
-.footer-text a {
-    color: #DDBEA9; /* Light Brown */
-    text-decoration: none;
-    transition: color 0.3s ease;
+.instagram-link {
+  color: rgba(240,227,211,0.85);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s ease;
 }
+.instagram-link:hover { color: #DDBEA9; }
 
-.footer-text a:hover {
-    color: #F0E3D3; /* Light Cream */
-}
+.footer i.fab { font-size: 1.2rem; line-height: 1; }
 
-.footer-social {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-link {
-    color: rgba(240, 227, 211, 0.7); /* Light Cream with transparency */
-    transition: color 0.3s ease;
-}
-
-.social-link:hover {
-    color: #DDBEA9; /* Light Brown */
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-bottom-content { flex-direction: column; text-align: center; gap: 0.75rem; }
 }
 
 /* Lightbox */
