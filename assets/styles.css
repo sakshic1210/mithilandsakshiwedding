@@ -6155,3 +6155,42 @@ body.rsvp-page {
         font-size: 0.85rem;
     }
 }
+
+/* === HOME PAGE ONLY: footer-at-bottom fix === */
+/* Place this at the VERY END of assets/styles.css */
+
+body#home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body#home main#main-content {
+  flex: 1 0 auto;
+  padding-bottom: 72px;          /* space so a fixed footer won't cover content */
+}
+
+/* Keep the hero from forcing extra scroll on the home page */
+body#home .hero {
+  height: auto !important;
+  min-height: calc(100vh - 80px - 64px) !important; /* 80px = navbar, ~64px = footer */
+}
+
+/* Make the footer sit flush at the bottom on the home page only */
+body#home .footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  z-index: 100;                  /* below the popup overlay (which is 3000) */
+}
+
+/* Mobile adjustments (navbar ~60px, footer a bit taller) */
+@media (max-width: 768px) {
+  body#home .hero {
+    min-height: calc(100vh - 60px - 72px) !important;
+  }
+  body#home main#main-content {
+    padding-bottom: 80px;
+  }
+}
+
