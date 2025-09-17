@@ -6170,3 +6170,19 @@ body.rsvp-page {
 .hearts-container { z-index: 3; }
 /* optional: if the radial layer is darkening too much, kill it */
 .hero::before { content: none; }
+
+/* --- Sticky footer layout --- */
+html, body { height: 100%; }
+body { min-height: 100svh; display: flex; flex-direction: column; }
+main { flex: 1 0 auto; }          /* make main fill the space */
+.footer { margin-top: auto; }      /* push footer to the bottom */
+
+/* --- Stable hero height (avoid iOS 100vh issues) --- */
+.hero { height: auto !important; min-height: 100vh; }  /* fallback */
+@supports (height: 100svh) {
+  .hero { min-height: 100svh !important; }             /* correct on mobile */
+}
+@media (min-width: 769px) {
+  .hero { min-height: calc(100svh - 80px) !important; }/* account for fixed navbar on desktop */
+}
+
