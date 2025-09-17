@@ -955,74 +955,156 @@ class ProgressiveRSVP {
         await this.submitRSVPForm(this.formData);
     }
 
-    async submitRSVPForm(formData) {
-        try {
-            // Create FormData object
-            const data = new FormData();
-            
-            // Add all form fields
-            data.append('fullName', formData.fullName);
-            data.append('attending', formData.attending);
-            data.append('countryCode', formData.countryCode);
-            data.append('mobileNumber', formData.mobileNumber);
-            data.append('age', formData.age);
-            data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
-            data.append('travelMode', formData.travelMode || '');
-            data.append('travelOther', formData.travelOther || '');
-            data.append('arrivalDate', formData.arrivalDate || '');
-            data.append('arrivalLocation', formData.arrivalLocation || '');
-            data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
-            data.append('arrivalTime', formData.arrivalTime || '');
-            data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed || '');
-            data.append('departureDate', formData.departureDate || '');
-            data.append('departureOther', formData.departureOther || '');
-            data.append('departureLocation', formData.departureLocation || '');
-            data.append('departureLocationOther', formData.departureLocationOther || '');
-            data.append('transportNumber', formData.transportNumber || '');
-            data.append('noteToCouple', formData.noteToCouple || '');
-            
-            // Add file if present
-            const fileInput = document.getElementById('identityProof');
-            if (fileInput && fileInput.files.length > 0) {
-                data.append('identityProof', fileInput.files[0]);
-            }
-            
-            // Send to Google Apps Script
-            const response = await fetch('https://script.google.com/macros/s/AKfycbzYOUR_SCRIPT_ID_HERE/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    timestamp: new Date().toISOString(),
-                    fullName: formData.fullName,
-                    attendance: formData.attendance,
-                    phoneNumber: formData.phoneNumber,
-                    age: formData.age,
-                    message: formData.message,
-                    guests: formData.guests
-                })
-            });
-            
-            const result = await response.json();
-            
-            if (response.ok && result.success) {
-                // Show appropriate success screen based on attendance
-                if (this.isAttending === false) {
-                    this.showNoResponseThankYou();
-                } else {
-                    this.showSuccessScreen();
-                }
-            } else {
-                // Show error message
-                alert('Error submitting RSVP: ' + (result.error || 'Unknown error'));
-            }
-            
-        } catch (error) {
-            console.error('RSVP submission error:', error);
-            alert('Error submitting RSVP. Please try again.');
+    setSubmitting(isSending) {
+      const submitBtn   = document.getElementById('submitBtn');
+      const submitBtnNo = document.getElementById('submitBtnNo');
+    
+      [submitBtn, submitBtnNo].forEach(btn => {
+        if (!btn) return;
+        if (isSending) {
+          btn.dataset.prevText = btn.textContent || btn.dataset.prevText || 'Submit RSVP';
+          btn.textContent = 'Submitting...';
+          btn.disabled = true;
+          btn.classList.add('is-submitting');
+        } else {
+          btn.textContent = btn.dataset.prevText || 'Submit RSVP';
+          btn.disabled = false;
+          btn.classList.remove('is-submitting');
         }
+      });
     }
+
+    createLoadingOverlay() {
+      if (document.getElementById('rsvpLoadingOverlay')) return;
+    
+      const style = document.createElement('style');
+      style.id = 'rsvpLoadingStyles';
+      style.textContent = `
+        #rsvpLoadingOverlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+          background:rgba(0,0,0,.45);backdrop-filter:saturate(1.2) blur(2px);z-index:9999}
+        #rsvpLoadingOverlay .box{background:#fff;padding:20px 24px;border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.2);
+          display:flex;gap:12px;align-items:center;font:500 15px/1.3 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+        #rsvpLoadingOverlay .spinner{width:22px;height:22px;border:3px solid #e0e0e0;border-top-color:#111;border-radius:50%;
+          animation:rsvp-spin .9s linear infinite}
+        @keyframes rsvp-spin{to{transform:rotate(360deg)}}
+      `;
+      document.head.appendChild(style);
+    
+      const overlay = document.createElement('div');
+      overlay.id = 'rsvpLoadingOverlay';
+      overlay.innerHTML = `<div class="box"><div class="spinner"></div><div>Submitting RSVP…</div></div>`;
+      document.body.appendChild(overlay);
+    }
+    showLoadingOverlay() {
+      this.createLoadingOverlay();
+      const el = document.getElementById('rsvpLoadingOverlay');
+      if (el) el.style.display = 'flex';
+      document.body.style.cursor = 'progress';
+    }
+    hideLoadingOverlay() {
+      const el = document.getElementById('rsvpLoadingOverlay');
+      if (el) el.style.display = 'none';
+      document.body.style.cursor = '';
+    }
+
+    async submitRSVPForm(formData) {
+        if (this._submitting) return;       // prevent double click/Enter
+        this._submitting = true;
+        this.setSubmitting(true);
+        this.showLoadingOverlay();
+        
+        try {
+        const data = new FormData();
+    
+        // Text fields (names must match Apps Script reads)
+        data.append('fullName', formData.fullName || '');
+        data.append('attending', formData.attending || '');
+        data.append('countryCode', formData.countryCode || '');
+        data.append('mobileNumber', formData.mobileNumber || '');
+        data.append('age', formData.age || '');
+        data.append('familyMembers', JSON.stringify(formData.familyMembers || []));
+        data.append('travelMode', formData.travelMode || '');
+        data.append('travelOther', formData.travelOther || '');
+        data.append('arrivalDate', formData.arrivalDate || '');
+        data.append('arrivalLocation', formData.arrivalLocation || '');
+        data.append('arrivalLocationOther', formData.arrivalLocationOther || '');
+        data.append('arrivalTime', formData.arrivalTime || '');
+        data.append('arrivalTimeNotConfirmed', formData.arrivalTimeNotConfirmed ? 'true' : 'false');
+        data.append('departureDate', formData.departureDate || '');
+        data.append('departureOther', formData.departureOther || '');
+        data.append('departureLocation', formData.departureLocation || '');
+        data.append('departureLocationOther', formData.departureLocationOther || '');
+        data.append('transportNumber', formData.transportNumber || '');
+        data.append('noteToCouple', formData.noteToCouple || '');
+        data.append('timestamp', formData.timestamp || new Date().toISOString());
+    
+        // Optional file
+        // Add file if present (clicked input OR drag & drop) + send base64 fallback
+        let fileBlob = null;
+        
+        // from <input type="file" id="identityProof">
+        const fileInput = document.getElementById('identityProof');
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
+          fileBlob = fileInput.files[0];
+        }
+        
+        // from drag-and-drop (stored earlier by handleFileUpload)
+        if (!fileBlob && formData.identityProof && formData.identityProof instanceof File) {
+          fileBlob = formData.identityProof;
+        }
+        
+        if (fileBlob) {
+          // Attach binary (works if Apps Script populates e.files)
+          data.append('identityProof', fileBlob, fileBlob.name);
+        
+          // Also attach base64 text (works even when e.files is empty)
+          const toBase64 = f => new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = () => res(String(r.result).split(',')[1]); // strip "data:*/*;base64,"
+            r.onerror = rej;
+            r.readAsDataURL(f);
+          });
+          const b64 = await toBase64(fileBlob);
+          data.append('identityProof_b64', b64);
+          data.append('identityProof_name', fileBlob.name || 'upload');
+          data.append('identityProof_type', fileBlob.type || 'application/octet-stream');
+        
+          console.log('Attaching file:', fileBlob.name);
+        } else {
+          console.log('No file attached.');
+        }
+
+    
+        // IMPORTANT: no headers — browser sets multipart/form-data automatically
+        const response = await fetch(
+          'https://script.google.com/macros/s/AKfycbzVWCnWZSCllYiq3cucfz0TsUESUPIiPw49eS2gvKQarHviqbl8eIQ7R2RQXXlOb5yJ/exec',
+          { method: 'POST', body: data }
+        );
+    
+        const text = await response.text();
+    
+        let result; try { result = JSON.parse(text); } catch { result = { success: false }; }
+    
+        if (response.ok && result.success) {
+          this.hideLoadingOverlay();
+          if (this.isAttending === false) this.showNoResponseThankYou();
+          else this.showSuccessScreen();
+        } else {
+            this.hideLoadingOverlay();
+            alert('Error submitting RSVP. Please try again.');
+            console.warn('Script response:', text);
+            this.setSubmitting(false);
+            this._submitting = false;
+        }
+      } catch (err) {
+        this.hideLoadingOverlay();
+        console.error('RSVP submission error:', err);
+        alert('Error submitting RSVP. Please try again.');
+        this.setSubmitting(false);
+        this._submitting = false;
+      }
+    }
+
 
     showSuccessScreen() {
         console.log('showSuccessScreen called');
